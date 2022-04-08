@@ -8,7 +8,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wndClass.hCursor = LoadCursor(nullptr, IDC_CROSS);
+	wndClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wndClass.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
 	wndClass.hInstance = hInstance;
 	wndClass.lpfnWndProc = (WNDPROC)WndProc;
@@ -58,22 +58,109 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	UnregisterClass(Title.c_str(), hInstance);
 
 	return msg.wParam;
+	
 }
+
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static int count;
+	static POINT position;
+
 	switch (message)
 	{
+#pragma region MessageBox
+	/*case WM_LBUTTONUP:
+	{
+		int result = MessageBox(hwnd, L"방가의 메세지", L"방가의 캡션", MB_OK);
 
-		case WM_CLOSE : case WM_DESTROY:
-		{
+		if (result == IDOK)
 			PostQuitMessage(0);
-		}
-		break;
+	}
+	break;*/
+#pragma endregion
 
-		default:
-			return DefWindowProc(hwnd, message, wParam, lParam);
+#pragma region Paint
+	/*case WM_LBUTTONDOWN:
+	{
+		wstring str = L"마우스가 눌림!!";
+
+		HDC hdc = GetDC(hwnd);
+		TextOut(hdc, 200, 200, str.c_str(), str.length());
+		ReleaseDC(hwnd, hdc);
+	}
+	break;
+
+	case WM_PAINT:
+	{
+		wstring str = L"WM_PAINT 메세지 발생";
+
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		TextOut(hdc, 200, 400, str.c_str(), str.length());
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+#pragma region KeyEvent
+	/*case WM_KEYDOWN:
+	{
+		if (wParam == VK_UP)
+			y -= 10;
+		else if (wParam == VK_DOWN)
+			y += 10;
+
+		if (wParam == VK_LEFT)
+			x -= 10;
+		else if (wParam == VK_RIGHT)
+			x += 10;
+			
+		InvalidateRect(hwnd, nullptr, TRUE);
+	}
+	break;
+
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		TextOut(hdc, x, y, L"★", 1);
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+#pragma region MousePosition
+	/*case WM_MOUSEMOVE:
+	{
+		position.x = LOWORD(lParam);
+		position.y = HIWORD(lParam);
+		InvalidateRect(hwnd, nullptr, TRUE);
+	}
+	break;
+
+	case WM_PAINT:
+	{
+		wstring str = to_wstring(position.x);
+		str += L", ";
+		str += to_wstring(position.y);
+
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		TextOut(hdc, position.x, position.y, str.c_str(), str.length());
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+
+	case WM_CLOSE : case WM_DESTROY:
+	{
+		PostQuitMessage(0);
+	}
+	break;
+
+	default:
+		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
 
 	return 0;
