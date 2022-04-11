@@ -61,11 +61,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	
 }
 
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static POINT position;
-	static int count;
+	static POINT position1 = { 100, 100 };
+	static POINT position2 = { 200, 200 };
+
+	static RECT rect1;
+	static RECT rect2;
+	UINT moveSpeed = 20;
+
+	enum class EDirctionType { None, Left, Right, Up, Down };
+	static EDirctionType type;
+
 
 	switch (message)
 	{
@@ -78,37 +85,56 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 	{
 		InvalidateRect(hwnd, nullptr, TRUE);
+
+		rect1.left = position1.x - 25;
+		rect1.top = position1.y - 25;
+		rect1.right = position1.x + 25;
+		rect1.bottom = position1.y + 25;
+
+		rect2.left = position2.x - 50;
+		rect2.top = position2.y - 50;
+		rect2.right = position2.x + 50;
+		rect2.bottom = position2.y + 50;
+
+		RECT temp;
+		if (IntersectRect(&temp, &rect1, &rect2) == TRUE)
+		{
+			switch (type)
+			{
+				case EDirctionType::Left:	position2.x -= moveSpeed;	break;
+				case EDirctionType::Right:	position2.x += moveSpeed;	break;
+				case EDirctionType::Up:		position2.y -= moveSpeed;	break;
+				case EDirctionType::Down:	position2.y += moveSpeed;	break;
+			}
+		}
+			
 	}
 	break;
 
 	case WM_KEYDOWN:
 	{
-		switch (wParam)
+		if (wParam == 'A' || wParam == VK_LEFT)
 		{
-			case 'W': case VK_UP:
-			{
-				position.y -= (position.y > 0) ? 1 : 0;
-			}
-			break;
-
-			case 'S': case VK_DOWN:
-			{
-				position.y += (position.y < 8) ? 1 : 0;
-			}
-			break;
-
-			case 'D': case VK_RIGHT:
-			{
-				position.x += (position.x < 15) ? 1 : 0;
-			}
-			break;
-
-			case 'A': case VK_LEFT:
-			{
-				position.x -= (position.x > 0) ? 1 : 0;
-			}
-			break;
+			position1.x -= moveSpeed;
+			type = EDirctionType::Left;
 		}
+		else if (wParam == 'D' || wParam == VK_RIGHT)
+		{
+			position1.x += moveSpeed;
+			type = EDirctionType::Right;
+		}
+
+		if (wParam == 'W' || wParam == VK_UP)
+		{
+			position1.y -= moveSpeed;
+			type = EDirctionType::Up;
+		}
+		else if (wParam == 'S' || wParam == VK_DOWN)
+		{
+			position1.y += moveSpeed;
+			type = EDirctionType::Down;
+		}
+
 	}
 	break;
 
@@ -117,46 +143,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hwnd, &ps);
 
-		int massSize = WINDOWHEIGHT / 9;
-
-		for (int i = 0; i < 9; i++)
-		{
-			MoveToEx(hdc, 0, i * massSize, nullptr);
-			LineTo(hdc, WINDOWWIDTH, i * massSize);
-		}
-
-		for (int i = 0; i < 16; i++)
-		{
-			MoveToEx(hdc, i * massSize, 0, nullptr);
-			LineTo(hdc, i * massSize, WINDOWHEIGHT);
-		}
-
-		int moveX = massSize * position.x;
-		int moveY = massSize * position.y;
-
-		Rectangle
-		(
-			hdc,
-			moveX + 10,					//Left
-			moveY + 10,					//Top
-			moveX + massSize - 10,		//Right
-			moveY + massSize - 10		//Bottom
-		);
-
-		wstring text = L"";
-		text += to_wstring(position.x);
-		text += L", ";
-		text += to_wstring(position.y);
-
-		TextOut
-		(
-			hdc,
-			moveX + massSize * 0.5f,
-			moveY + massSize * 0.5f,
-			text.c_str(),
-			text.size()
-		);
-
+		Rectangle(hdc, rect1.left, rect1.top, rect1.right, rect1.bottom);
+		Rectangle(hdc, rect2.left, rect2.top, rect2.right, rect2.bottom);
+		
 		EndPaint(hwnd, &ps);
 	}
 	break;
