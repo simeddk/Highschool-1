@@ -65,9 +65,53 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static POINT position;
-	
+	static int count;
+
 	switch (message)
 	{
+	case WM_CREATE:
+	{
+		SetTimer(hwnd, 1, 100, nullptr);
+	}
+	break;
+
+	case WM_TIMER:
+	{
+		InvalidateRect(hwnd, nullptr, TRUE);
+	}
+	break;
+
+	case WM_KEYDOWN:
+	{
+		switch (wParam)
+		{
+			case 'W': case VK_UP:
+			{
+				position.y -= (position.y > 0) ? 1 : 0;
+			}
+			break;
+
+			case 'S': case VK_DOWN:
+			{
+				position.y += (position.y < 8) ? 1 : 0;
+			}
+			break;
+
+			case 'D': case VK_RIGHT:
+			{
+				position.x += (position.x < 15) ? 1 : 0;
+			}
+			break;
+
+			case 'A': case VK_LEFT:
+			{
+				position.x -= (position.x > 0) ? 1 : 0;
+			}
+			break;
+		}
+	}
+	break;
+
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
@@ -86,6 +130,32 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			MoveToEx(hdc, i * massSize, 0, nullptr);
 			LineTo(hdc, i * massSize, WINDOWHEIGHT);
 		}
+
+		int moveX = massSize * position.x;
+		int moveY = massSize * position.y;
+
+		Rectangle
+		(
+			hdc,
+			moveX + 10,					//Left
+			moveY + 10,					//Top
+			moveX + massSize - 10,		//Right
+			moveY + massSize - 10		//Bottom
+		);
+
+		wstring text = L"";
+		text += to_wstring(position.x);
+		text += L", ";
+		text += to_wstring(position.y);
+
+		TextOut
+		(
+			hdc,
+			moveX + massSize * 0.5f,
+			moveY + massSize * 0.5f,
+			text.c_str(),
+			text.size()
+		);
 
 		EndPaint(hwnd, &ps);
 	}
