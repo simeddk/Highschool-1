@@ -65,6 +65,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static POINT position;
+	static bool bPressed;
+
+	static POINT start;
+	static POINT end;
 
 	switch (message)
 	{
@@ -150,6 +154,139 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hwnd, &ps);
 	}
 	break;*/
+#pragma endregion
+
+#pragma region Line
+	/*case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+
+		MoveToEx(hdc, 100, 20, nullptr);
+		LineTo(hdc, 100, 500);
+		LineTo(hdc, 400, 330);
+		LineTo(hdc, 100, 20);
+
+		MoveToEx(hdc, 500, 20, nullptr);
+		LineTo(hdc, 700, 20);
+		LineTo(hdc, 500, 400);
+		LineTo(hdc, 500, 20);
+
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+#pragma region FreeDraw
+	/*case WM_LBUTTONDOWN:
+	{
+		position.x = LOWORD(lParam);
+		position.y = HIWORD(lParam);
+		bPressed = true;
+	}
+	break;
+
+	case WM_MOUSEMOVE:
+	{
+		if (bPressed == true)
+		{
+			HDC hdc = GetDC(hwnd);
+
+			MoveToEx(hdc, position.x, position.y, nullptr);
+
+			position.x = LOWORD(lParam);
+			position.y = HIWORD(lParam);
+
+			LineTo(hdc, position.x, position.y);
+			ReleaseDC(hwnd, hdc);
+		}
+	}
+	break;
+
+	case WM_LBUTTONUP:
+	{
+		bPressed = false;
+	}
+	break;*/
+#pragma endregion
+
+#pragma region Shape
+	/*case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+
+		Rectangle(hdc, 100, 100, 500, 500);
+		Ellipse(hdc, 100, 100, 500, 500);
+
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+#pragma region DragBox
+	/*case WM_LBUTTONDOWN:
+	{
+		start.x = LOWORD(lParam);
+		start.y = HIWORD(lParam);
+		bPressed = true;
+		
+	}
+	break;
+
+	case WM_MOUSEMOVE:
+	{
+		if (bPressed == true)
+		{
+			end.x = LOWORD(lParam);
+			end.y = HIWORD(lParam);
+			InvalidateRect(hwnd, nullptr, TRUE);
+		}
+	}
+	break;
+
+	case WM_LBUTTONUP:
+	{
+		bPressed = false;
+		
+	}
+	break;
+
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+
+		Rectangle(hdc, start.x, start.y, end.x, end.y);
+
+		EndPaint(hwnd, &ps);
+	}
+	break;*/
+#pragma endregion
+
+#pragma region Grid
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+
+		int massSize = WINDOWHEIGHT / 9;
+
+		for (int i = 0; i < 9; i++)
+		{
+			MoveToEx(hdc, 0, i * massSize, nullptr);
+			LineTo(hdc, WINDOWWIDTH, i * massSize);
+		}
+
+		for (int i = 0; i < 16; i++)
+		{
+			MoveToEx(hdc, i * massSize, 0, nullptr);
+			LineTo(hdc, i * massSize, WINDOWHEIGHT);
+		}
+
+		EndPaint(hwnd, &ps);
+	}
+	break;
 #pragma endregion
 
 
