@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-bool Aabb(RECT a, RECT b);
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -9,7 +7,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
-	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(DKGRAY_BRUSH);
 	wndClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wndClass.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
 	wndClass.hInstance = hInstance;
@@ -66,30 +64,34 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	UnregisterClass(Title.c_str(), hInstance);
 
 	return msg.wParam;
-	
+
 }
-
-
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static POINT position1 = { 100, 100 };
-	static POINT position2 = { 200, 200 };
+	static RECT player;
+	static POINT position = { WINDOWWIDTH / 2,  WINDOWHEIGHT - 65 };
+	static LONG movespeed = 20;
 
-	static RECT rect1;
-	static RECT rect2;
-	UINT moveSpeed = 20;
+	static int delay = 50;
 
-	enum class EDirctionType { None, Left, Right, Up, Down };
-	static EDirctionType type;
+	struct DropRect
+	{
+		RECT rect;
+		LONG dropSpeed;
+	};
 
-	static bool bCheck;
+	static vector<DropRect> dropRects;
+
+	static int score = 0;
+	static int level = 1;
 
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-		SetTimer(hwnd, 1, 100, nullptr);
+		SetTimer(hwnd, 1, 10, nullptr);
+		srand((UINT)time(nullptr));
 	}
 	break;
 
@@ -97,57 +99,65 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		InvalidateRect(hwnd, nullptr, TRUE);
 
-		rect1.left = position1.x - 25;
-		rect1.top = position1.y - 25;
-		rect1.right = position1.x + 25;
-		rect1.bottom = position1.y + 25;
+		//Player의 left, top, right, bottom을 정의한 부분
+		player = RECT_INIT(position.x, position.y, 50);
 
-		rect2.left = position2.x - 50;
-		rect2.top = position2.y - 50;
-		rect2.right = position2.x + 50;
-		rect2.bottom = position2.y + 50;
-
-		RECT temp;
-		if (IntersectRect(&temp, &rect1, &rect2) == TRUE)
+		//delay가 50이상 경우 똥 생성
+		if (delay >= 50)
 		{
-			switch (type)
+			DropRect dropRect;
+			dropRect.rect.left = rand() % WINDOWWIDTH;
+			dropRect.rect.right = dropRect.rect.left + 25;
+			dropRect.rect.top = -25;
+			dropRect.rect.bottom = 0;
+
+			dropRect.dropSpeed = rand() % 10 + 5;
+
+			dropRects.push_back(dropRect);
+
+			delay = rand() % 50;
+		}
+		//delay가 50보다 작은 경우 delay를 level만큼 증가
+		else
+			delay += level;
+
+		//똥 관련 반복문
+		vector<DropRect>::iterator it;
+		for (it = dropRects.begin(); it != dropRects.end(); ++it)
+		{
+			//똥 낙하
+			it->rect.top += it->dropSpeed;
+			it->rect.bottom += it->dropSpeed;
+
+			//점수 올리기
+			/*if (it->rect.top > WINDOWHEIGHT)
 			{
-				case EDirctionType::Left:	position2.x -= moveSpeed;	break;
-				case EDirctionType::Right:	position2.x += moveSpeed;	break;
-				case EDirctionType::Up:		position2.y -= moveSpeed;	break;
-				case EDirctionType::Down:	position2.y += moveSpeed;	break;
-			}
+				score++;
+				dropRects.erase(it);
+			}*/
+
+			
 		}
 
-		bCheck = Aabb(rect1, rect2);
-			
 	}
 	break;
 
 	case WM_KEYDOWN:
 	{
-		if (wParam == 'A' || wParam == VK_LEFT)
+		switch (wParam)
 		{
-			position1.x -= moveSpeed;
-			type = EDirctionType::Left;
-		}
-		else if (wParam == 'D' || wParam == VK_RIGHT)
+		case 'A': case VK_LEFT:
 		{
-			position1.x += moveSpeed;
-			type = EDirctionType::Right;
+			position.x -= (position.x - 12 >= 0) ? movespeed : 0;
 		}
+		break;
 
-		if (wParam == 'W' || wParam == VK_UP)
+		case 'D': case VK_RIGHT:
 		{
-			position1.y -= moveSpeed;
-			type = EDirctionType::Up;
+			position.x += (position.x <= WINDOWWIDTH - 25) ? movespeed : 0;
 		}
-		else if (wParam == 'S' || wParam == VK_DOWN)
-		{
-			position1.y += moveSpeed;
-			type = EDirctionType::Down;
+		break;
 		}
-
 	}
 	break;
 
@@ -156,21 +166,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hwnd, &ps);
 
-		Rectangle(hdc, rect1.left, rect1.top, rect1.right, rect1.bottom);
-		Rectangle(hdc, rect2.left, rect2.top, rect2.right, rect2.bottom);
-		
-		if (bCheck == true)
-		{
-			wstring str = L"꽝!";
-			TextOut(hdc, position1.x, position1.y, str.c_str(), str.length());
-		}
+		RECT_RENDER(player);
+
+		for (UINT i = 0; i < dropRects.size(); i++)
+			RECT_RENDER(dropRects[i].rect);
 
 		EndPaint(hwnd, &ps);
 	}
 	break;
 
 
-	case WM_CLOSE : case WM_DESTROY:
+	case WM_CLOSE: case WM_DESTROY:
 	{
 		PostQuitMessage(0);
 	}
@@ -181,16 +187,4 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return 0;
-}
-
-bool Aabb(RECT a, RECT b)
-{
-	bool bCheck = true;
-
-	bCheck &= (a.left <= b.right);
-	bCheck &= (a.right >= b.left);
-	bCheck &= (a.top <= b.bottom);
-	bCheck &= (a.bottom >= b.top);
-
-	return bCheck;
 }
