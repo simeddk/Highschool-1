@@ -86,6 +86,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static int score = 0;
 	static int level = 1;
 
+	static POINT cursorPosition;
+
 	switch (message)
 	{
 	case WM_CREATE:
@@ -122,6 +124,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			delay += level;
 
 		//똥 관련 반복문
+		RECT temp;
 		vector<DropRect>::iterator it;
 		for (it = dropRects.begin(); it != dropRects.end(); ++it)
 		{
@@ -129,15 +132,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			it->rect.top += it->dropSpeed;
 			it->rect.bottom += it->dropSpeed;
 
+			//마우스로 핵우산
+			if (PtInRect(&it->rect, cursorPosition))
+			{
+				score -= 5;
+				dropRects.erase(it);
+				break;
+			}
+
+			//충돌 처리
+			else if (IntersectRect(&temp, &player, &it->rect))
+			{
+				score -= 10;
+				dropRects.erase(it);
+				break;
+			}
+
 			//점수 올리기
-			/*if (it->rect.top > WINDOWHEIGHT)
+			else if (it->rect.top > WINDOWHEIGHT)
 			{
 				score++;
 				dropRects.erase(it);
-			}*/
-
+				break;
+			}
 			
-		}
+			
+		}//for(it)
+
+		level = score / 10 + 1;
+		if (level < 1)
+			level = 1;
+		
 
 	}
 	break;
@@ -161,6 +186,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case WM_MOUSEMOVE:
+	{
+		cursorPosition.x = LOWORD(lParam);
+		cursorPosition.y = HIWORD(lParam);
+	}
+	break;
+	
+
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
@@ -170,6 +203,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		for (UINT i = 0; i < dropRects.size(); i++)
 			RECT_RENDER(dropRects[i].rect);
+
+		wstring str = L"점수 : " + to_wstring(score);
+		TextOut(hdc, 10, 10, str.c_str(), str.length());
+
+		str = L"레벨 : " + to_wstring(level);
+		TextOut(hdc, 10, 30, str.c_str(), str.length());
 
 		EndPaint(hwnd, &ps);
 	}
