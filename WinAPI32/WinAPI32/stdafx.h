@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-#define WINDOWWIDTH 1280
-#define WINDOWHEIGHT 720
+#define WINDOWWIDTH 640
+#define WINDOWHEIGHT 480
 
 const wstring Title = L"WinAPI32";

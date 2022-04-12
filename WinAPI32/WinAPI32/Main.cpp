@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+bool Aabb(RECT a, RECT b);
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -17,13 +19,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&wndClass);
 
+	int screenX = GetSystemMetrics(SM_CXSCREEN);
+	int screenY = GetSystemMetrics(SM_CYSCREEN);
+
+	int centerX = screenX / 2 - WINDOWWIDTH / 2;
+	int centerY = screenY / 2 - WINDOWHEIGHT / 2;
+
 	HWND hwnd = CreateWindow
 	(
 		Title.c_str(),
 		Title.c_str(),
 		WS_OVERLAPPEDWINDOW,
-		100,
-		20,
+		centerX,
+		centerY,
 		WINDOWWIDTH,
 		WINDOWHEIGHT,
 		nullptr,
@@ -61,6 +69,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	
 }
 
+
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static POINT position1 = { 100, 100 };
@@ -73,6 +83,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	enum class EDirctionType { None, Left, Right, Up, Down };
 	static EDirctionType type;
 
+	static bool bCheck;
 
 	switch (message)
 	{
@@ -107,6 +118,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				case EDirctionType::Down:	position2.y += moveSpeed;	break;
 			}
 		}
+
+		bCheck = Aabb(rect1, rect2);
 			
 	}
 	break;
@@ -146,6 +159,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		Rectangle(hdc, rect1.left, rect1.top, rect1.right, rect1.bottom);
 		Rectangle(hdc, rect2.left, rect2.top, rect2.right, rect2.bottom);
 		
+		if (bCheck == true)
+		{
+			wstring str = L"²Î!";
+			TextOut(hdc, position1.x, position1.y, str.c_str(), str.length());
+		}
+
 		EndPaint(hwnd, &ps);
 	}
 	break;
@@ -164,3 +183,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+bool Aabb(RECT a, RECT b)
+{
+	bool bCheck = true;
+
+	bCheck &= (a.left <= b.right);
+	bCheck &= (a.right >= b.left);
+	bCheck &= (a.top <= b.bottom);
+	bCheck &= (a.bottom >= b.top);
+
+	return bCheck;
+}
