@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+HDC Hdc = nullptr;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -197,18 +199,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
+		Hdc = BeginPaint(hwnd, &ps);
 
-		RECT_RENDER(player);
-
-		for (UINT i = 0; i < dropRects.size(); i++)
-			RECT_RENDER(dropRects[i].rect);
-
-		wstring str = L"점수 : " + to_wstring(score);
-		TextOut(hdc, 10, 10, str.c_str(), str.length());
-
-		str = L"레벨 : " + to_wstring(level);
-		TextOut(hdc, 10, 30, str.c_str(), str.length());
+		
 
 		EndPaint(hwnd, &ps);
 	}
