@@ -15,3 +15,4 @@ using namespace std;
 const wstring Title = L"WinAPI32";
 
 extern HDC Hdc;
+extern HWND Hwnd;

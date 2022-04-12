@@ -1,11 +1,17 @@
 #include "stdafx.h"
+#include "Game/Game.h"
 
 HDC Hdc = nullptr;
+HWND Hwnd = nullptr;
+
+Game* game = nullptr;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
+	game = new Game();
+
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
@@ -40,6 +46,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 		nullptr
 	);
 
+	Hwnd = hwnd;
+
 	ShowWindow(hwnd, nCmdShow);
 
 	MSG msg;
@@ -65,145 +73,32 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpszCmdP
 	DestroyWindow(hwnd);
 	UnregisterClass(Title.c_str(), hInstance);
 
+	delete game;
+	game = nullptr;
+
 	return msg.wParam;
 
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static RECT player;
-	static POINT position = { WINDOWWIDTH / 2,  WINDOWHEIGHT - 65 };
-	static LONG movespeed = 20;
-
-	static int delay = 50;
-
-	struct DropRect
-	{
-		RECT rect;
-		LONG dropSpeed;
-	};
-
-	static vector<DropRect> dropRects;
-
-	static int score = 0;
-	static int level = 1;
-
-	static POINT cursorPosition;
-
 	switch (message)
 	{
 	case WM_CREATE:
 	{
 		SetTimer(hwnd, 1, 10, nullptr);
-		srand((UINT)time(nullptr));
 	}
 	break;
 
 	case WM_TIMER:
 	{
-		InvalidateRect(hwnd, nullptr, TRUE);
-
-		//Player의 left, top, right, bottom을 정의한 부분
-		player = RECT_INIT(position.x, position.y, 50);
-
-		//delay가 50이상 경우 똥 생성
-		if (delay >= 50)
-		{
-			DropRect dropRect;
-			dropRect.rect.left = rand() % WINDOWWIDTH;
-			dropRect.rect.right = dropRect.rect.left + 25;
-			dropRect.rect.top = -25;
-			dropRect.rect.bottom = 0;
-
-			dropRect.dropSpeed = rand() % 10 + 5;
-
-			dropRects.push_back(dropRect);
-
-			delay = rand() % 50;
-		}
-		//delay가 50보다 작은 경우 delay를 level만큼 증가
-		else
-			delay += level;
-
-		//똥 관련 반복문
-		RECT temp;
-		vector<DropRect>::iterator it;
-		for (it = dropRects.begin(); it != dropRects.end(); ++it)
-		{
-			//똥 낙하
-			it->rect.top += it->dropSpeed;
-			it->rect.bottom += it->dropSpeed;
-
-			//마우스로 핵우산
-			if (PtInRect(&it->rect, cursorPosition))
-			{
-				score -= 5;
-				dropRects.erase(it);
-				break;
-			}
-
-			//충돌 처리
-			else if (IntersectRect(&temp, &player, &it->rect))
-			{
-				score -= 10;
-				dropRects.erase(it);
-				break;
-			}
-
-			//점수 올리기
-			else if (it->rect.top > WINDOWHEIGHT)
-			{
-				score++;
-				dropRects.erase(it);
-				break;
-			}
-			
-			
-		}//for(it)
-
-		level = score / 10 + 1;
-		if (level < 1)
-			level = 1;
-		
-
+		game->Update();
 	}
 	break;
-
-	case WM_KEYDOWN:
-	{
-		switch (wParam)
-		{
-		case 'A': case VK_LEFT:
-		{
-			position.x -= (position.x - 12 >= 0) ? movespeed : 0;
-		}
-		break;
-
-		case 'D': case VK_RIGHT:
-		{
-			position.x += (position.x <= WINDOWWIDTH - 25) ? movespeed : 0;
-		}
-		break;
-		}
-	}
-	break;
-
-	case WM_MOUSEMOVE:
-	{
-		cursorPosition.x = LOWORD(lParam);
-		cursorPosition.y = HIWORD(lParam);
-	}
-	break;
-	
 
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		Hdc = BeginPaint(hwnd, &ps);
-
-		
-
-		EndPaint(hwnd, &ps);
+		game->Render();
 	}
 	break;
 

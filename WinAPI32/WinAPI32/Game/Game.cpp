@@ -4,6 +4,7 @@
 
 Game::Game()
 {
+	srand((UINT)time(nullptr));
 	player = new Player();
 }
 
@@ -15,11 +16,17 @@ Game::~Game()
 
 void Game::Update()
 {
+	InvalidateRect(Hwnd, nullptr, TRUE);
+
 	player->Update();
 }
 
 void Game::Render()
 {
-	player->Render();
+	PAINTSTRUCT ps;
+	Hdc = BeginPaint(Hwnd, &ps);
+	{
+		player->Render();
+	}
+	EndPaint(Hwnd, &ps);
 }
-//19:01

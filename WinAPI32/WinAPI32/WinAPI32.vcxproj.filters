@@ -8,6 +8,9 @@
     <ClInclude Include="Objects\Player.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -15,10 +18,16 @@
     <ClCompile Include="Objects\Player.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
       <UniqueIdentifier>{3cae5193-bf1d-49cf-b65c-deca3bad183a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{1650fb52-96b1-47d3-9517-fee46d54b44d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
