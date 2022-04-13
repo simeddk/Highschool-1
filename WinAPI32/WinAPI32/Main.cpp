@@ -102,6 +102,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case WM_MOUSEMOVE:
+	{
+		POINT cursorPosition;
+		cursorPosition.x = LOWORD(lParam);
+		cursorPosition.y = HIWORD(lParam);
+
+		game->SetCursorPosition(cursorPosition);
+	}
+	break;
+
 
 	case WM_CLOSE: case WM_DESTROY:
 	{

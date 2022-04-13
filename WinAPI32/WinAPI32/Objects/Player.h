@@ -11,6 +11,8 @@ public:
 	void Update() override;
 	void Render() override;
 
+	RECT& GetRect() { return rect; }
+
 private:
 	RECT rect;
 	POINT position;
