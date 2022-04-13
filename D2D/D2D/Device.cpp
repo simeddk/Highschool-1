@@ -23,6 +23,16 @@ int APIENTRY WinMain
 HWND Hwnd = nullptr;
 wstring Title = L"D2D";
 
+IDXGISwapChain* SwapChain = nullptr;
+ID3D11Device* Device = nullptr;
+ID3D11DeviceContext* DeviceContext = nullptr;
+ID3D11RenderTargetView* RTV = nullptr;
+
+ID3D11VertexShader* VertexShader = nullptr;
+ID3D11PixelShader* PixelShader = nullptr;
+ID3D10Blob* VsBlob = nullptr;
+ID3D10Blob* PsBlob = nullptr;
+
 void InitWindow(HINSTANCE hInstance, int nCmdShow)
 {
     //Register Window Class
@@ -71,6 +81,58 @@ void InitWindow(HINSTANCE hInstance, int nCmdShow)
 
 void InitDirect3D(HINSTANCE hInstance)
 {
+    //SwpaChain->GI
+    DXGI_MODE_DESC giDesc;
+    ZeroMemory(&giDesc, sizeof(DXGI_MODE_DESC));
+    giDesc.Width = Width;
+    giDesc.Height = Height;
+    giDesc.RefreshRate.Numerator = 60;
+    giDesc.RefreshRate.Denominator = 1;
+    giDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    giDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+    giDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+
+    //SwapChain
+    DXGI_SWAP_CHAIN_DESC swapDesc;
+    ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
+    swapDesc.BufferDesc = giDesc;
+    swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    swapDesc.BufferCount = 1;
+    swapDesc.SampleDesc.Count = 1;
+    swapDesc.SampleDesc.Quality = 0;
+    swapDesc.OutputWindow = Hwnd;
+    swapDesc.Windowed = TRUE;
+    swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+
+    //FeatureLevel
+    vector<D3D_FEATURE_LEVEL> featureLevel =
+    {
+        D3D_FEATURE_LEVEL_11_1,
+        D3D_FEATURE_LEVEL_11_0,
+        D3D_FEATURE_LEVEL_10_1,
+        D3D_FEATURE_LEVEL_10_0,
+        D3D_FEATURE_LEVEL_9_3,
+        D3D_FEATURE_LEVEL_9_2,
+        D3D_FEATURE_LEVEL_9_1,
+    };
+
+    //Create SwapChain
+    HRESULT hr = D3D11CreateDeviceAndSwapChain
+    (   
+        nullptr,
+        D3D_DRIVER_TYPE_HARDWARE,
+        nullptr,
+        0,
+        featureLevel.data(),
+        featureLevel.size(),
+        D3D11_SDK_VERSION,
+        &swapDesc,
+        &SwapChain,
+        &Device,
+        nullptr,
+        &DeviceContext
+    );
+    assert(SUCCEEDED(hr));
 }
 
 void Destroy()
@@ -115,5 +177,3 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
-
-//19:00
