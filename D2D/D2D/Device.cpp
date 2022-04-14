@@ -197,6 +197,7 @@ void InitDirect3D(HINSTANCE hInstance)
     //Create Viewport
     {
         D3D11_VIEWPORT viewport;
+        ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
         viewport.TopLeftX = 0;
         viewport.TopLeftY = 0;
         viewport.Width = Width;
