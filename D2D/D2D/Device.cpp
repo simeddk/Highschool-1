@@ -133,10 +133,90 @@ void InitDirect3D(HINSTANCE hInstance)
         &DeviceContext
     );
     assert(SUCCEEDED(hr));
+
+    //BackBuffer
+    ID3D11Texture2D* firstFrame;
+    hr = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&firstFrame);
+    assert(SUCCEEDED(hr));
+
+    //Create RTV
+    hr = Device->CreateRenderTargetView(firstFrame, nullptr, &RTV);
+    assert(SUCCEEDED(hr));
+    firstFrame->Release();
+
+    //OMSet
+    DeviceContext->OMSetRenderTargets(1, &RTV, nullptr);
+ 
+    //Create VertexShader & PixelShader
+    {
+        HRESULT hr;
+
+        //Compile VertexShader
+        hr = D3DX11CompileFromFile
+        (
+            L"Effect.hlsl", 0, 0, "VS", "vs_5_0",
+            0, 0, nullptr,
+            &VsBlob, nullptr, nullptr
+        );
+        assert(SUCCEEDED(hr));
+
+        //Compile PixelShader
+        hr = D3DX11CompileFromFile
+        (
+            L"Effect.hlsl", 0, 0, "PS", "ps_5_0",
+            0, 0, nullptr,
+            &PsBlob, nullptr, nullptr
+        );
+        assert(SUCCEEDED(hr));
+
+        //Create VertexShader
+        hr = Device->CreateVertexShader
+        (
+            VsBlob->GetBufferPointer(),
+            VsBlob->GetBufferSize(),
+            nullptr,
+            &VertexShader
+        );
+        assert(SUCCEEDED(hr));
+
+        //Create PixelShader
+        hr = Device->CreatePixelShader
+        (
+            PsBlob->GetBufferPointer(),
+            PsBlob->GetBufferSize(),
+            nullptr,
+            &PixelShader
+        );
+        assert(SUCCEEDED(hr));
+
+        //VSSet, PSSet
+        DeviceContext->VSSetShader(VertexShader, nullptr, 0);
+        DeviceContext->PSSetShader(PixelShader, nullptr, 0);
+    }
+
+    //Create Viewport
+    {
+        D3D11_VIEWPORT viewport;
+        viewport.TopLeftX = 0;
+        viewport.TopLeftY = 0;
+        viewport.Width = Width;
+        viewport.Height = Height;
+
+        DeviceContext->RSSetViewports(1, &viewport);
+    }
 }
 
 void Destroy()
 {
+    PixelShader->Release();
+    VertexShader->Release();
+    PsBlob->Release();
+    VsBlob->Release();
+
+    RTV->Release();
+    SwapChain->Release();
+    DeviceContext->Release();
+    Device->Release();
 }
 
 WPARAM Running()
