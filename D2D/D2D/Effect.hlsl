@@ -1,17 +1,21 @@
 struct VertexInput
 {
     float4 Position : POSITION0;
+    float4 Color : COLOR0;
 };
 
 struct PixelInput
 {
     float4 Position : SV_POSITION;
+	float4 Color : COLOR0;
 };
 
 PixelInput VS(VertexInput input)
 {
     PixelInput output;
+    
     output.Position = input.Position;
+	output.Color = input.Color;
 
     return output;
 }
@@ -19,5 +23,5 @@ PixelInput VS(VertexInput input)
 
 float4 PS(PixelInput input) : SV_TARGET0
 {
-    return float4(0, 1, 0, 1);
+    return input.Color;
 }
