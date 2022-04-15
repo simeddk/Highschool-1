@@ -7,4 +7,7 @@
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Effect.hlsl" />
+  </ItemGroup>
 </Project>

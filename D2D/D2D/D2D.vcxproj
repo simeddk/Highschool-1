@@ -153,6 +153,11 @@
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Effect.hlsl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -16,7 +16,8 @@ PixelInput VS(VertexInput input)
     return output;
 }
 
-float4 PS(PixelInput input) : SV_TARGET
+
+float4 PS(PixelInput input) : SV_TARGET0
 {
     return float4(0, 1, 0, 1);
 }
