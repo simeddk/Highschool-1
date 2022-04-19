@@ -81,7 +81,11 @@ void InitScene()
 	//Create RasterizerState(WireFrame)
 	{
 		D3D11_RASTERIZER_DESC desc;
-		Device->CreateRasterizerState(, &wireFrameMode);
+		ZeroMemory(&desc, sizeof(D3D11_RASTERIZER_DESC));
+		desc.FillMode = D3D11_FILL_WIREFRAME;
+		desc.CullMode = D3D11_CULL_BACK;
+		HRESULT hr = Device->CreateRasterizerState(&desc, &wireFrameMode);
+		assert(SUCCEEDED(hr));
 	}
 	
 }
@@ -92,9 +96,11 @@ void DestroyScene()
 	vertexBuffer->Release();
 }
 
+bool bWireFrameMode = false;
 void Update()
 {
-	
+	if (GetAsyncKeyState('1') & 0x0001) //Toggle
+		bWireFrameMode = !bWireFrameMode;
 }
 
 void Render()
@@ -107,6 +113,8 @@ void Render()
 		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		DeviceContext->IASetInputLayout(inputLayout);
+
+		DeviceContext->RSSetState(bWireFrameMode ? wireFrameMode : nullptr);
 
 		DeviceContext->Draw(6, 0);
 	}
