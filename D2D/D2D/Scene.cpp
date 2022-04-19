@@ -11,17 +11,15 @@ struct Vertex
 
 void InitScene()
 {
-	Vertex vertices[4];
+	Vertex vertices[3];
 
-	vertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);
-	vertices[1].Position = D3DXVECTOR3(+0.5f, +0.5f, 0.0f);
-	vertices[2].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f);
-	vertices[3].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f);
+	vertices[0].Position = D3DXVECTOR3(-0.5f, +0.0f, 0.0f);
+	vertices[1].Position = D3DXVECTOR3(+0.0f, +1.0f, 0.0f);
+	vertices[2].Position = D3DXVECTOR3(+0.5f, +0.0f, 0.0f);
 
 	vertices[0].Color = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-	vertices[1].Color = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-	vertices[2].Color = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-	vertices[3].Color = D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f);
+	vertices[1].Color = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+	vertices[2].Color = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 
 	//Create VertexBuffer
@@ -29,7 +27,7 @@ void InitScene()
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 		desc.Usage = D3D11_USAGE_DEFAULT;
-		desc.ByteWidth = sizeof(Vertex) * 4;
+		desc.ByteWidth = sizeof(Vertex) * 3;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
@@ -83,13 +81,9 @@ void DestroyScene()
 	vertexBuffer->Release();
 }
 
-D3D11_PRIMITIVE_TOPOLOGY topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
 void Update()
 {
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-		topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
-	else if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
-		topology = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
+	
 }
 
 void Render()
@@ -100,10 +94,10 @@ void Render()
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
 		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-		DeviceContext->IASetPrimitiveTopology(topology);
+		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		DeviceContext->IASetInputLayout(inputLayout);
 
-		DeviceContext->Draw(4, 0);
+		DeviceContext->Draw(3, 0);
 	}
 	SwapChain->Present(0, 0);
 }
