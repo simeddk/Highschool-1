@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Device.h"
 
 ID3D11Buffer* vertexBuffer = nullptr;
@@ -9,10 +10,10 @@ struct Vertex
 	D3DXVECTOR3 Position;
 	D3DXCOLOR Color;
 };
+Vertex vertices[6];
 
 void InitScene()
 {
-	Vertex vertices[6];
 	vertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f); //좌하
 	vertices[1].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f); //좌상
 	vertices[2].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f); //우하
@@ -99,8 +100,32 @@ void DestroyScene()
 bool bWireFrameMode = false;
 void Update()
 {
-	if (GetAsyncKeyState('1') & 0x0001) //Toggle
+	if (Key->Toggle('1')) //Toggle
 		bWireFrameMode = !bWireFrameMode;
+	
+	if (Key->Down(VK_SPACE))
+		MessageBox(Hwnd, L"스페이스바가 눌림", L"키보드 테스트", MB_OK);
+
+	if (Key->Up(VK_RETURN))
+		MessageBox(Hwnd, L"엔터키를 눌렀다 뗌", L"키보드 테스트", MB_OK);
+
+	//[0]정점 이동하기
+	if (Key->Press('A'))
+		vertices[0].Position.x -= 1e-4f;
+	else if (Key->Press('D'))
+		vertices[0].Position.x += 1e-4f;
+
+	if (Key->Press('S'))
+		vertices[0].Position.y -= 1e-4f;
+	else if (Key->Press('W'))
+		vertices[0].Position.y += 1e-4f;
+
+	DeviceContext->UpdateSubresource
+	(
+		vertexBuffer,
+		0, nullptr, vertices, sizeof(Vertex) * 6, 0
+	);
+
 }
 
 void Render()
