@@ -11,8 +11,9 @@ struct Vertex
 
 void InitScene()
 {
-	Vertex vertices[3];
+	Vertex vertices[6];
 
+	//Tri - 1
 	vertices[0].Position = D3DXVECTOR3(-0.5f, +0.0f, 0.0f);
 	vertices[1].Position = D3DXVECTOR3(+0.0f, +1.0f, 0.0f);
 	vertices[2].Position = D3DXVECTOR3(+0.5f, +0.0f, 0.0f);
@@ -21,13 +22,22 @@ void InitScene()
 	vertices[1].Color = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 	vertices[2].Color = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
+	//Tri - 2
+	vertices[3].Position = D3DXVECTOR3(-0.5f, -1.0f, 0.0f);
+	vertices[4].Position = D3DXVECTOR3(+0.0f, +0.0f, 0.0f);
+	vertices[5].Position = D3DXVECTOR3(+0.5f, -1.0f, 0.0f);
+
+	vertices[3].Color = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+	vertices[4].Color = D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f);
+	vertices[5].Color = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+
 
 	//Create VertexBuffer
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 		desc.Usage = D3D11_USAGE_DEFAULT;
-		desc.ByteWidth = sizeof(Vertex) * 3;
+		desc.ByteWidth = sizeof(Vertex) * 6;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
@@ -97,7 +107,7 @@ void Render()
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		DeviceContext->IASetInputLayout(inputLayout);
 
-		DeviceContext->Draw(3, 0);
+		DeviceContext->Draw(6, 0);
 	}
 	SwapChain->Present(0, 0);
 }
