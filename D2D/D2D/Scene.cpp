@@ -32,9 +32,10 @@ void InitScene()
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-		desc.Usage = D3D11_USAGE_DEFAULT;
 		desc.ByteWidth = sizeof(Vertex) * 6;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		desc.Usage = D3D11_USAGE_DYNAMIC;
+		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
 		subResource.pSysMem = vertices;
@@ -111,21 +112,41 @@ void Update()
 
 	//[0]정점 이동하기
 	if (Key->Press('A'))
-		vertices[0].Position.x -= 1e-4f;
+	{
+		for (int i = 0; i < 6; i++)
+			vertices[i].Position.x -= 1e-4f;
+	}
 	else if (Key->Press('D'))
-		vertices[0].Position.x += 1e-4f;
+	{
+		for (int i = 0; i < 6; i++)
+			vertices[i].Position.x += 1e-4f;
+	}
 
 	if (Key->Press('S'))
-		vertices[0].Position.y -= 1e-4f;
+	{
+		for (int i = 0 ; i < 6; i++)
+			vertices[i].Position.y -= 1e-4f;
+	}
 	else if (Key->Press('W'))
-		vertices[0].Position.y += 1e-4f;
+	{
+		for (int i = 0; i < 6; i++)
+			vertices[i].Position.y += 1e-4f;
+	}
 
-	DeviceContext->UpdateSubresource
-	(
-		vertexBuffer,
-		0, nullptr, vertices, sizeof(Vertex) * 6, 0
-	);
+	//GPU에서 서브리소스를 고쳐쓰는 경우
+	//DeviceContext->UpdateSubresource
+	//(
+	//	vertexBuffer,
+	//	0, nullptr, vertices, sizeof(Vertex) * 6, 0
+	//);
 
+	//CPU에서 서브리소스를 고쳐쓰는 경우
+	D3D11_MAPPED_SUBRESOURCE subResouce;
+	DeviceContext->Map(vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResouce);
+	{
+		memcpy(subResouce.pData, vertices, sizeof(Vertex) * 6);
+	}
+	DeviceContext->Unmap(vertexBuffer, 0);
 }
 
 void Render()
