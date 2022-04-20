@@ -11,8 +11,9 @@ struct Vertex
 	D3DXVECTOR3 Position;
 	D3DXCOLOR Color;
 };
-Vertex vertices[6];
-UINT indices[12];
+
+Vertex vertices[4];
+UINT indices[6];
 
 void InitScene()
 {
@@ -20,21 +21,17 @@ void InitScene()
 	vertices[1].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f); //좌상
 	vertices[2].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f); //우하
 	vertices[3].Position = D3DXVECTOR3(+0.5f, +0.5f, 0.0f); //우상
-	vertices[4].Position = D3DXVECTOR3(+0.75f, -0.75f, 0.0f); //추가1
-	vertices[5].Position = D3DXVECTOR3(+0.75f, +0.75f, 0.0f); //추가2
 	
 	vertices[0].Color = D3DXCOLOR(1, 0, 0, 1); //R
 	vertices[1].Color = D3DXCOLOR(0, 1, 0, 1); //G
 	vertices[2].Color = D3DXCOLOR(0, 0, 1, 1); //B
 	vertices[3].Color = D3DXCOLOR(0, 1, 1, 1); //C
-	vertices[4].Color = D3DXCOLOR(1, 0, 1, 1); //M
-	vertices[5].Color = D3DXCOLOR(1, 1, 0, 1); //Y
 
 	//Create VertexBuffer
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-		desc.ByteWidth = sizeof(Vertex) * 6;
+		desc.ByteWidth = sizeof(Vertex) * 4;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		desc.Usage = D3D11_USAGE_DYNAMIC;
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -52,18 +49,12 @@ void InitScene()
 	indices[3] = 2;
 	indices[4] = 1;
 	indices[5] = 3;
-	indices[6] = 2;
-	indices[7] = 3;
-	indices[8] = 4;
-	indices[9] = 4;
-	indices[10] = 3;
-	indices[11] = 5;
 
 	//Create IndexBuffer
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-		desc.ByteWidth = sizeof(UINT) * 12;
+		desc.ByteWidth = sizeof(UINT) * 6;
 		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		desc.Usage = D3D11_USAGE_IMMUTABLE;
 
@@ -135,13 +126,7 @@ void Update()
 	if (Key->Toggle('1')) //Toggle
 		bWireFrameMode = !bWireFrameMode;
 	
-	if (Key->Down(VK_SPACE))
-		MessageBox(Hwnd, L"스페이스바가 눌림", L"키보드 테스트", MB_OK);
-
-	if (Key->Up(VK_RETURN))
-		MessageBox(Hwnd, L"엔터키를 눌렀다 뗌", L"키보드 테스트", MB_OK);
-
-	//[0]정점 이동하기
+	//모든 정점 이동하기
 	if (Key->Press('A'))
 	{
 		for (int i = 0; i < ARRAYSIZE(vertices); i++)
@@ -164,14 +149,6 @@ void Update()
 			vertices[i].Position.y += 1e-4f;
 	}
 
-	//GPU에서 서브리소스를 고쳐쓰는 경우
-	//DeviceContext->UpdateSubresource
-	//(
-	//	vertexBuffer,
-	//	0, nullptr, vertices, sizeof(Vertex) * 6, 0
-	//);
-
-	//CPU에서 서브리소스를 고쳐쓰는 경우
 	D3D11_MAPPED_SUBRESOURCE subResouce;
 	DeviceContext->Map(vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResouce);
 	{
@@ -194,7 +171,7 @@ void Render()
 
 		DeviceContext->RSSetState(bWireFrameMode ? wireFrameMode : nullptr);
 
-		DeviceContext->DrawIndexed(12, 0, 0);
+		DeviceContext->DrawIndexed(6, 0, 0);
 	}
 	SwapChain->Present(0, 0);
 }
