@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D2D", "D2D\D2D.vcxproj", "{EDD12E53-E6C2-4D30-9034-5EC353F6EEFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{453E1005-5A02-47FF-8E24-6757113EA02B}"
+	ProjectSection(SolutionItems) = preProject
+		_Shaders\01_Effect.fx = _Shaders\01_Effect.fx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

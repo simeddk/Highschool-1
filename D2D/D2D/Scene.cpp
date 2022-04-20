@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Device.h"
 
+Shader* shader = nullptr;
+
 ID3D11Buffer* vertexBuffer = nullptr;
 ID3D11Buffer* indexBuffer = nullptr;
-ID3D11InputLayout* inputLayout = nullptr;
 ID3D11RasterizerState* wireFrameMode = nullptr;
 
 struct Vertex
@@ -17,6 +18,8 @@ UINT indices[6];
 
 void InitScene()
 {
+	shader = new Shader(L"01_Effect.fx");
+
 	vertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f); //ÁÂÇÏ
 	vertices[1].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f); //ÁÂ»ó
 	vertices[2].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f); //¿ìÇÏ
@@ -65,42 +68,6 @@ void InitScene()
 		assert(SUCCEEDED(hr));
 	}
 
-	//Create InputLayout
-	{
-		D3D11_INPUT_ELEMENT_DESC desc[] =
-		{
-			{
-				"POSITION",						//SemanticName;
-				0,								//SemanticIndex;
-				DXGI_FORMAT_R32G32B32_FLOAT,	//Format;
-				0,								//InputSlot;
-				0,								//AlignedByteOffset;
-				D3D11_INPUT_PER_VERTEX_DATA,	//InputSlotClass;
-				0								//InstanceDataStepRate;
-			},
-			{
-				"COLOR",						//SemanticName;
-				0,								//SemanticIndex;
-				DXGI_FORMAT_R32G32B32_FLOAT,	//Format;
-				0,								//InputSlot;
-				12,								//AlignedByteOffset;
-				D3D11_INPUT_PER_VERTEX_DATA,	//InputSlotClass;
-				0								//InstanceDataStepRate;
-			}
-		};
-		
-
-		HRESULT hr = Device->CreateInputLayout
-		(
-			desc,
-			2,  
-			VsBlob->GetBufferPointer(),
-			VsBlob->GetBufferSize(),
-			&inputLayout
-		);
-		assert(SUCCEEDED(hr));
-	}
-
 	//Create RasterizerState(WireFrame)
 	{
 		D3D11_RASTERIZER_DESC desc;
@@ -115,9 +82,9 @@ void InitScene()
 
 void DestroyScene()
 {
-	inputLayout->Release();
-	vertexBuffer->Release();
-	indexBuffer->Release();
+	SafeRelease(vertexBuffer);
+	SafeRelease(indexBuffer);
+	SafeRelease(wireFrameMode);
 }
 
 bool bWireFrameMode = false;
@@ -167,11 +134,10 @@ void Render()
 		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		DeviceContext->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		DeviceContext->IASetInputLayout(inputLayout);
 
 		DeviceContext->RSSetState(bWireFrameMode ? wireFrameMode : nullptr);
 
-		DeviceContext->DrawIndexed(6, 0, 0);
+		shader->DrawIndexed(0, 0, 6);
 	}
 	SwapChain->Present(0, 0);
 }

@@ -29,11 +29,6 @@ ID3D11Device* Device = nullptr;
 ID3D11DeviceContext* DeviceContext = nullptr;
 ID3D11RenderTargetView* RTV = nullptr;
 
-ID3D11VertexShader* VertexShader = nullptr;
-ID3D11PixelShader* PixelShader = nullptr;
-ID3D10Blob* VsBlob = nullptr;
-ID3D10Blob* PsBlob = nullptr;
-
 Keyboard* Key = nullptr;
 
 void InitWindow(HINSTANCE hInstance, int nCmdShow)
@@ -149,54 +144,7 @@ void InitDirect3D(HINSTANCE hInstance)
 
     //OMSet
     DeviceContext->OMSetRenderTargets(1, &RTV, nullptr);
- 
-    //Create VertexShader & PixelShader
-    {
-        HRESULT hr;
-
-        //Compile VertexShader
-        hr = D3DX11CompileFromFile
-        (
-            L"Effect.hlsl", 0, 0, "VS", "vs_5_0",
-            0, 0, nullptr,
-            &VsBlob, nullptr, nullptr
-        );
-        assert(SUCCEEDED(hr));
-
-        //Compile PixelShader
-        hr = D3DX11CompileFromFile
-        (
-            L"Effect.hlsl", 0, 0, "PS", "ps_5_0",
-            0, 0, nullptr,
-            &PsBlob, nullptr, nullptr
-        );
-        assert(SUCCEEDED(hr));
-
-        //Create VertexShader
-        hr = Device->CreateVertexShader
-        (
-            VsBlob->GetBufferPointer(),
-            VsBlob->GetBufferSize(),
-            nullptr,
-            &VertexShader
-        );
-        assert(SUCCEEDED(hr));
-
-        //Create PixelShader
-        hr = Device->CreatePixelShader
-        (
-            PsBlob->GetBufferPointer(),
-            PsBlob->GetBufferSize(),
-            nullptr,
-            &PixelShader
-        );
-        assert(SUCCEEDED(hr));
-
-        //VSSet, PSSet
-        DeviceContext->VSSetShader(VertexShader, nullptr, 0);
-        DeviceContext->PSSetShader(PixelShader, nullptr, 0);
-    }
-
+   
     //Create Viewport
     {
         D3D11_VIEWPORT viewport;
@@ -212,15 +160,10 @@ void InitDirect3D(HINSTANCE hInstance)
 
 void Destroy()
 {
-    PixelShader->Release();
-    VertexShader->Release();
-    PsBlob->Release();
-    VsBlob->Release();
-
-    RTV->Release();
-    SwapChain->Release();
-    DeviceContext->Release();
-    Device->Release();
+    SafeRelease(RTV);
+    SafeRelease(SwapChain);
+    SafeRelease(DeviceContext);
+    SafeRelease(Device);
 }
 
 WPARAM Running()
@@ -251,8 +194,7 @@ WPARAM Running()
     /////////////////////////////
     DestroyScene();
 
-    delete Key;
-    Key = nullptr;
+    SafeDelete(Key);
 
     return msg.wParam;
 }
