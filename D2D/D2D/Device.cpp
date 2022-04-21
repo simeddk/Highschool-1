@@ -171,6 +171,9 @@ WPARAM Running()
     MSG msg;
     ZeroMemory(&msg, sizeof(MSG));
 
+    ImGui::Create(Hwnd, Device, DeviceContext);
+    ImGui::StyleColorsDark();
+
     Key = new Keyboard();
 
     InitScene();
@@ -187,6 +190,7 @@ WPARAM Running()
         }
         else
         {
+            ImGui::Update();
             Update();
             Render();
         }
@@ -196,11 +200,16 @@ WPARAM Running()
 
     SafeDelete(Key);
 
+    ImGui::Delete();
+
     return msg.wParam;
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui::WndProc(hwnd, msg, wParam, lParam))
+        return true;
+
     switch (msg)
     {
         case WM_DESTROY: PostQuitMessage(0); break;

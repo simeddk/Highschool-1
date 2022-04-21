@@ -88,8 +88,17 @@ void DestroyScene()
 }
 
 bool bWireFrameMode = false;
+D3DXCOLOR color = D3DXCOLOR(0, 1, 0, 1);
 void Update()
 {
+	ImGui::Text("%s", "Hello World");
+	ImGui::Checkbox("WireFrame", &bWireFrameMode);
+	ImGui::ColorEdit3("Color", (float*)color);
+	//ImGui::Text("%f, %f, %f", color[0], color[1], color[2]);
+	ImGui::Text("%f, %f, %f", color.r, color.g, color.b);
+
+	shader->AsVector("Color")->SetFloatVector(color);
+
 	if (Key->Toggle('1')) //Toggle
 		bWireFrameMode = !bWireFrameMode;
 	
@@ -139,5 +148,7 @@ void Render()
 
 		shader->DrawIndexed(0, 0, 6);
 	}
+	ImGui::Render();
 	SwapChain->Present(0, 0);
+	
 }
