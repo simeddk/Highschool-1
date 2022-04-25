@@ -5,30 +5,31 @@ Shader* shader = nullptr;
 
 ID3D11Buffer* vertexBuffer = nullptr;
 ID3D11Buffer* indexBuffer = nullptr;
-ID3D11RasterizerState* wireFrameMode = nullptr;
 
 struct Vertex
 {
-	D3DXVECTOR3 Position;
-	D3DXCOLOR Color;
+	Vector3 Position;
+	Color Color;
 };
 
 Vertex vertices[4];
 UINT indices[6];
 
+Matrix W, V, P;
+
 void InitScene()
 {
-	shader = new Shader(L"01_Effect.fx");
+	shader = new Shader(L"02_World.fx");
 
-	vertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f); //좌하
-	vertices[1].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f); //좌상
-	vertices[2].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f); //우하
-	vertices[3].Position = D3DXVECTOR3(+0.5f, +0.5f, 0.0f); //우상
+	vertices[0].Position = Vector3(-100.0f, -100.0f, 0.0f); //좌하
+	vertices[1].Position = Vector3(-100.0f, +100.0f, 0.0f); //좌상
+	vertices[2].Position = Vector3(+100.0f, -100.0f, 0.0f); //우하
+	vertices[3].Position = Vector3(+100.0f, +100.0f, 0.0f); //우상
 	
-	vertices[0].Color = D3DXCOLOR(1, 0, 0, 1); //R
-	vertices[1].Color = D3DXCOLOR(0, 1, 0, 1); //G
-	vertices[2].Color = D3DXCOLOR(0, 0, 1, 1); //B
-	vertices[3].Color = D3DXCOLOR(0, 1, 1, 1); //C
+	vertices[0].Color = Color(1, 0, 0, 1); //R
+	vertices[1].Color = Color(0, 1, 0, 1); //G
+	vertices[2].Color = Color(0, 0, 1, 1); //B
+	vertices[3].Color = Color(0, 1, 1, 1); //C
 
 	//Create VertexBuffer
 	{
@@ -68,69 +69,73 @@ void InitScene()
 		assert(SUCCEEDED(hr));
 	}
 
-	//Create RasterizerState(WireFrame)
-	{
-		D3D11_RASTERIZER_DESC desc;
-		ZeroMemory(&desc, sizeof(D3D11_RASTERIZER_DESC));
-		desc.FillMode = D3D11_FILL_WIREFRAME;
-		desc.CullMode = D3D11_CULL_BACK;
-		HRESULT hr = Device->CreateRasterizerState(&desc, &wireFrameMode);
-		assert(SUCCEEDED(hr));
-	}
+	D3DXMatrixIdentity(&W);
+	D3DXMatrixIdentity(&V);
+	D3DXMatrixIdentity(&P);
 	
+	//World Matrix
+	W._41 = 110.f, W._42 = 110.f;
+
+	//View Matrix
+	Vector3 eye = Vector3(0, 0, 0);
+	Vector3 at = Vector3(0, 0, 1);
+	Vector3 up = Vector3(0, 1, 0);
+	D3DXMatrixLookAtLH(&V, &eye, &(eye + at), &up);
+
+	//Projection Matrix
+	D3DXMatrixOrthoOffCenterLH(&P, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
+
+	//Set Parameters
+	shader->AsMatrix("World")->SetMatrix(W);
+	shader->AsMatrix("View")->SetMatrix(V);
+	shader->AsMatrix("Projection")->SetMatrix(P);
+
 }
 
 void DestroyScene()
 {
 	SafeRelease(vertexBuffer);
 	SafeRelease(indexBuffer);
-	SafeRelease(wireFrameMode);
 }
 
-bool bWireFrameMode = false;
 D3DXCOLOR color = D3DXCOLOR(0, 1, 0, 1);
+Vector3 position = Vector3(110, 110, 0);
 void Update()
 {
-	ImGui::Text("%s", "Hello World");
-	ImGui::Checkbox("WireFrame", &bWireFrameMode);
-	ImGui::ColorEdit3("Color", (float*)color);
-	//ImGui::Text("%f, %f, %f", color[0], color[1], color[2]);
-	ImGui::Text("%f, %f, %f", color.r, color.g, color.b);
-
-	shader->AsVector("Color")->SetFloatVector(color);
-
-	if (Key->Toggle('1')) //Toggle
-		bWireFrameMode = !bWireFrameMode;
-	
-	//모든 정점 이동하기
-	if (Key->Press('A'))
+	//World Matrix를 이용한 이동 테스트
 	{
-		for (int i = 0; i < ARRAYSIZE(vertices); i++)
-			vertices[i].Position.x -= 1e-4f;
-	}
-	else if (Key->Press('D'))
-	{
-		for (int i = 0; i < ARRAYSIZE(vertices); i++)
-			vertices[i].Position.x += 1e-4f;
+		if (Key->Press('A'))
+			position.x -= 0.1f;
+		else if (Key->Press('D'))
+			position.x += 0.1f;
+
+		if (Key->Press('S'))
+			position.y -= 0.1f;
+		else if (Key->Press('W'))
+			position.y += 0.1f;
+
+		D3DXMatrixTranslation(&W, position.x, position.y, 0.0f);
+		shader->AsMatrix("World")->SetMatrix(W);
 	}
 
-	if (Key->Press('S'))
+	//View 테스트
 	{
-		for (int i = 0 ; i < ARRAYSIZE(vertices); i++)
-			vertices[i].Position.y -= 1e-4f;
-	}
-	else if (Key->Press('W'))
-	{
-		for (int i = 0; i < ARRAYSIZE(vertices); i++)
-			vertices[i].Position.y += 1e-4f;
+		ImGui::SliderFloat("Exe X", &V._41, -800, +800);
+		ImGui::SliderFloat("Exe Z", &V._43, 0, 2000);
+		shader->AsMatrix("View")->SetMatrix(V);
+
+		ImGui::LabelText("Position", "%.2f, %.2f", position.x, position.y);
 	}
 
-	D3D11_MAPPED_SUBRESOURCE subResouce;
-	DeviceContext->Map(vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResouce);
+	//Projection 테스트
 	{
-		memcpy(subResouce.pData, vertices, sizeof(Vertex) * ARRAYSIZE(vertices));
+		float fov = 3.141592f * 0.5f;
+		float aspect = (float)Width / (float)Height;
+
+		D3DXMatrixPerspectiveFovLH(&P, fov, aspect, 0, 1000);
+		shader->AsMatrix("Projection")->SetMatrix(P);
 	}
-	DeviceContext->Unmap(vertexBuffer, 0);
+
 }
 
 void Render()
@@ -143,8 +148,6 @@ void Render()
 		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		DeviceContext->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		DeviceContext->RSSetState(bWireFrameMode ? wireFrameMode : nullptr);
 
 		shader->DrawIndexed(0, 0, 6);
 	}

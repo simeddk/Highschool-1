@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{453E1005-5A02-47FF-8E24-6757113EA02B}"
 	ProjectSection(SolutionItems) = preProject
 		_Shaders\01_Effect.fx = _Shaders\01_Effect.fx
+		_Shaders\02_World.fx = _Shaders\02_World.fx
 	EndProjectSection
 EndProject
 Global
