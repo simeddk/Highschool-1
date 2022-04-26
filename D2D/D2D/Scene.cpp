@@ -15,21 +15,17 @@ struct Vertex
 Vertex vertices[4];
 UINT indices[6];
 
-Matrix W, V, P;
+Matrix W1, W2;
+Matrix V, P;
 
 void InitScene()
 {
 	shader = new Shader(L"02_World.fx");
 
-	//vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f); //ÁÂÇÏ
-	//vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f); //ÁÂ»ó
-	//vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f); //¿ìÇÏ
-	//vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f); //¿ì»ó
-
-	vertices[0].Position = Vector3(+0.0f, +0.0f, 0.0f); //ÁÂÇÏ
-	vertices[1].Position = Vector3(+0.0f, +1.0f, 0.0f); //ÁÂ»ó
-	vertices[2].Position = Vector3(+1.0f, +0.0f, 0.0f); //¿ìÇÏ
-	vertices[3].Position = Vector3(+1.0f, +1.0f, 0.0f); //¿ì»ó
+	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f); //ÁÂÇÏ
+	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f); //ÁÂ»ó
+	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f); //¿ìÇÏ
+	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f); //¿ì»ó
 	
 	vertices[0].Color = Color(1, 0, 0, 1); //R
 	vertices[1].Color = Color(0, 1, 0, 1); //G
@@ -74,10 +70,6 @@ void InitScene()
 		assert(SUCCEEDED(hr));
 	}
 
-	D3DXMatrixIdentity(&W);
-	D3DXMatrixIdentity(&V);
-	D3DXMatrixIdentity(&P);
-	
 	//View Matrix
 	Vector3 eye = Vector3(0, 0, 0);
 	Vector3 at = Vector3(0, 0, 1);
@@ -96,47 +88,49 @@ void DestroyScene()
 }
 
 
-Vector3 position = Vector3(110, 110, 0);
+
 void Update()
 {
-	//World Matrix
+	static Vector2 position1 = Vector2(300, 400);
+	static Vector2 position2 = Vector2(600, 400);
+
+	//World Matrix 1
 	{
 		if (Key->Press('A'))
-			position.x -= 0.1f;
+			position1.x -= 0.1f;
 		else if (Key->Press('D'))
-			position.x += 0.1f;
+			position1.x += 0.1f;
 
 		if (Key->Press('S'))
-			position.y -= 0.1f;
+			position1.y -= 0.1f;
 		else if (Key->Press('W'))
-			position.y += 0.1f;
+			position1.y += 0.1f;
 
 		Matrix S, T;
-
-		//Scaling Test
-		static Vector2 scale = Vector2(100, 100);
-		if (Key->Press(VK_RIGHT))
-			scale.x += 0.1f;
-		else if (Key->Press(VK_LEFT))
-			scale.x -= 0.1f;
-		if (Key->Press(VK_UP))
-			scale.y += 0.1f;
-		else if (Key->Press(VK_DOWN))
-			scale.y -= 0.1f;
-		
-		//Scaing
-		D3DXMatrixScaling(&S, scale.x, scale.y, 1.f);
-
-		//Translation
-		D3DXMatrixTranslation(&T, position.x, position.y, 0.0f);
-
-		W = S * T;
+		D3DXMatrixScaling(&S, 100.f, 100.f, 1.f);
+		D3DXMatrixTranslation(&T, position1.x, position1.y, 0.0f);
+		W1 = S * T;
 	}
 
-	//15:01
+	//World Matrix 2
+	{
+		if (Key->Press(VK_LEFT))
+			position2.x -= 0.1f;
+		else if (Key->Press(VK_RIGHT))
+			position2.x += 0.1f;
+
+		if (Key->Press(VK_DOWN))
+			position2.y -= 0.1f;
+		else if (Key->Press(VK_UP))
+			position2.y += 0.1f;
+
+		Matrix S, T;
+		D3DXMatrixScaling(&S, 50.f, 75.f, 1.f);
+		D3DXMatrixTranslation(&T, position2.x, position2.y, 0.0f);
+		W2 = S * T;
+	}
 
 	//Set Parameters
-	shader->AsMatrix("World")->SetMatrix(W);
 	shader->AsMatrix("View")->SetMatrix(V);
 	shader->AsMatrix("Projection")->SetMatrix(P);
 
@@ -153,6 +147,12 @@ void Render()
 		DeviceContext->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+		shader->AsMatrix("World")->SetMatrix(W1);
+		shader->AsVector("Color")->SetFloatVector(Color(0, 1, 0, 1));
+		shader->DrawIndexed(0, 0, 6);
+
+		shader->AsMatrix("World")->SetMatrix(W2);
+		shader->AsVector("Color")->SetFloatVector(Color(0, 0, 1, 1));
 		shader->DrawIndexed(0, 0, 6);
 	}
 	ImGui::Render();
