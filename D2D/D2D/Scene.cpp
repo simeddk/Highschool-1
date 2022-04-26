@@ -6,6 +6,7 @@ Shader* shader = nullptr;
 Matrix V, P;
 
 Rect* rect = nullptr;
+Rect* rect2 = nullptr;
 
 void InitScene()
 {
@@ -15,12 +16,15 @@ void InitScene()
 	rect->Position(200, 500);
 	rect->Scale(100, 100);
 	rect->Color(1, 0, 0, 1);
+
+	rect2 = new Rect(shader, Vector2(500, 500), Vector2(50, 50), Color(0, 0, 1, 1));
 }
 
 void DestroyScene()
 {
 	SafeDelete(shader);
 	SafeDelete(rect);
+	SafeDelete(rect2);
 }
 
 
@@ -36,7 +40,7 @@ void Update()
 	D3DXMatrixOrthoOffCenterLH(&P, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
 
 	rect->Update(V, P);
-
+	rect2->Update(V, P);
 }
 
 void Render()
@@ -45,6 +49,7 @@ void Render()
 	DeviceContext->ClearRenderTargetView(RTV, (float*)bgcolor);
 	{
 		rect->Render();
+		rect2->Render();
 	}
 	ImGui::Render();
 	SwapChain->Present(0, 0);
