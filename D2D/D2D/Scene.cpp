@@ -21,10 +21,10 @@ void InitScene()
 {
 	shader = new Shader(L"02_World.fx");
 
-	vertices[0].Position = Vector3(-100.0f, -100.0f, 0.0f); //좌하
-	vertices[1].Position = Vector3(-100.0f, +100.0f, 0.0f); //좌상
-	vertices[2].Position = Vector3(+100.0f, -100.0f, 0.0f); //우하
-	vertices[3].Position = Vector3(+100.0f, +100.0f, 0.0f); //우상
+	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f); //좌하
+	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f); //좌상
+	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f); //우하
+	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f); //우상
 	
 	vertices[0].Color = Color(1, 0, 0, 1); //R
 	vertices[1].Color = Color(0, 1, 0, 1); //G
@@ -73,9 +73,6 @@ void InitScene()
 	D3DXMatrixIdentity(&V);
 	D3DXMatrixIdentity(&P);
 	
-	//World Matrix
-	W._41 = 110.f, W._42 = 110.f;
-
 	//View Matrix
 	Vector3 eye = Vector3(0, 0, 0);
 	Vector3 at = Vector3(0, 0, 1);
@@ -85,11 +82,6 @@ void InitScene()
 	//Projection Matrix
 	D3DXMatrixOrthoOffCenterLH(&P, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
 
-	//Set Parameters
-	shader->AsMatrix("World")->SetMatrix(W);
-	shader->AsMatrix("View")->SetMatrix(V);
-	shader->AsMatrix("Projection")->SetMatrix(P);
-
 }
 
 void DestroyScene()
@@ -98,11 +90,11 @@ void DestroyScene()
 	SafeRelease(indexBuffer);
 }
 
-D3DXCOLOR color = D3DXCOLOR(0, 1, 0, 1);
+
 Vector3 position = Vector3(110, 110, 0);
 void Update()
 {
-	//World Matrix를 이용한 이동 테스트
+	//World Matrix
 	{
 		if (Key->Press('A'))
 			position.x -= 0.1f;
@@ -114,27 +106,23 @@ void Update()
 		else if (Key->Press('W'))
 			position.y += 0.1f;
 
-		D3DXMatrixTranslation(&W, position.x, position.y, 0.0f);
-		shader->AsMatrix("World")->SetMatrix(W);
+		Matrix S, T;
+		
+		//Scaing
+		D3DXMatrixScaling(&S, 200.f, 200.f, 1.f); //_11 = 200, _22 = 200
+
+		//Translation
+		D3DXMatrixTranslation(&T, position.x, position.y, 0.0f); //_41 = 110, _42 = 110
+
+		W = S * T;
 	}
 
-	//View 테스트
-	{
-		ImGui::SliderFloat("Exe X", &V._41, -800, +800);
-		ImGui::SliderFloat("Exe Z", &V._43, 0, 2000);
-		shader->AsMatrix("View")->SetMatrix(V);
+	//15:01
 
-		ImGui::LabelText("Position", "%.2f, %.2f", position.x, position.y);
-	}
-
-	//Projection 테스트
-	{
-		float fov = 3.141592f * 0.5f;
-		float aspect = (float)Width / (float)Height;
-
-		D3DXMatrixPerspectiveFovLH(&P, fov, aspect, 0, 1000);
-		shader->AsMatrix("Projection")->SetMatrix(P);
-	}
+	//Set Parameters
+	shader->AsMatrix("World")->SetMatrix(W);
+	shader->AsMatrix("View")->SetMatrix(V);
+	shader->AsMatrix("Projection")->SetMatrix(P);
 
 }
 
