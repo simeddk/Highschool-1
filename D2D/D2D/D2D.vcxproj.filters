@@ -15,6 +15,9 @@
     <ClInclude Include="Utilities\String.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Rect.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
@@ -32,6 +35,9 @@
     <ClCompile Include="Utilities\String.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Rect.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -42,6 +48,9 @@
     </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{ca48810f-c54f-417d-b694-959995a36d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{f5aeca80-49fd-45f9-b646-1fa3be9e3297}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
