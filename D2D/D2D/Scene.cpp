@@ -21,10 +21,15 @@ void InitScene()
 {
 	shader = new Shader(L"02_World.fx");
 
-	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f); //ÁÂÇÏ
-	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f); //ÁÂ»ó
-	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f); //¿ìÇÏ
-	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f); //¿ì»ó
+	//vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f); //ÁÂÇÏ
+	//vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f); //ÁÂ»ó
+	//vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f); //¿ìÇÏ
+	//vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f); //¿ì»ó
+
+	vertices[0].Position = Vector3(+0.0f, +0.0f, 0.0f); //ÁÂÇÏ
+	vertices[1].Position = Vector3(+0.0f, +1.0f, 0.0f); //ÁÂ»ó
+	vertices[2].Position = Vector3(+1.0f, +0.0f, 0.0f); //¿ìÇÏ
+	vertices[3].Position = Vector3(+1.0f, +1.0f, 0.0f); //¿ì»ó
 	
 	vertices[0].Color = Color(1, 0, 0, 1); //R
 	vertices[1].Color = Color(0, 1, 0, 1); //G
@@ -107,12 +112,23 @@ void Update()
 			position.y += 0.1f;
 
 		Matrix S, T;
+
+		//Scaling Test
+		static Vector2 scale = Vector2(100, 100);
+		if (Key->Press(VK_RIGHT))
+			scale.x += 0.1f;
+		else if (Key->Press(VK_LEFT))
+			scale.x -= 0.1f;
+		if (Key->Press(VK_UP))
+			scale.y += 0.1f;
+		else if (Key->Press(VK_DOWN))
+			scale.y -= 0.1f;
 		
 		//Scaing
-		D3DXMatrixScaling(&S, 200.f, 200.f, 1.f); //_11 = 200, _22 = 200
+		D3DXMatrixScaling(&S, scale.x, scale.y, 1.f);
 
 		//Translation
-		D3DXMatrixTranslation(&T, position.x, position.y, 0.0f); //_41 = 110, _42 = 110
+		D3DXMatrixTranslation(&T, position.x, position.y, 0.0f);
 
 		W = S * T;
 	}
