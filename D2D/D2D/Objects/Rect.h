@@ -5,7 +5,7 @@ class Rect
 public:
 	Rect(Shader* shader);
 	Rect(Shader* shader, Vector2 position, Vector2 scale, D3DXCOLOR color = D3DXCOLOR(1, 1, 1, 1));
-	~Rect();
+	virtual ~Rect();
 
 	void Update(Matrix& V, Matrix& P);
 	void Render();
