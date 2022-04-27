@@ -21,6 +21,9 @@
     <ClInclude Include="Objects\MovableRect.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\Time.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
@@ -43,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="Objects\MovableRect.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Time.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 //Common Header
 #include <Windows.h>
 #include <assert.h>
+#include <mutex>
 
 //STL
 #include <vector>
@@ -47,6 +48,7 @@ typedef D3DXMATRIX Matrix;
 
 //Framework
 #include "Systems/Keyboard.h"
+#include "Systems/Time.h"
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
 #include "Renders/Shader.h"

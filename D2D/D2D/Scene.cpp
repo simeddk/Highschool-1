@@ -53,7 +53,8 @@ void Update()
 	movable->MoveSpeed(moveSpeed);
 
 	//FPS
-	ImGui::Text("%.2f", ImGui::GetIO().Framerate);
+	ImGui::LabelText("FPS", "%.2f", ImGui::GetIO().Framerate);
+	ImGui::LabelText("RunningTime", "%.2f", Time::Get()->Running());
 
 	rect->Update(V, P);
 	rect2->Update(V, P);
@@ -62,6 +63,11 @@ void Update()
 		movable->MoveLeft();
 	else if (Key->Press('D') || Key->Press(VK_RIGHT))
 		movable->MoveRight();
+
+	if (Key->Down(VK_SPACE))
+		movable->Jump();
+	else if (Key->Up(VK_SPACE))
+		movable->StopJump();
 
 	movable->Update(V, P);
 
