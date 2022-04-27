@@ -2,6 +2,8 @@ matrix World;
 matrix View;
 matrix Projection;
 
+float4 Color = float4(1, 0, 0, 1);
+
 struct VertexInput
 {
 	float4 Position : Position;
@@ -25,13 +27,15 @@ VertexOutput VS(VertexInput input)
 	return output;
 }
 
-float4 Color = float4(1, 0, 0, 1);
-float4 PS(VertexOutput input) : SV_Target
+
+float4 PS_DiffuseColor(VertexOutput input) : SV_Target
 {
 	return Color;
-	//return float4(1, 0, 0, 1);
-	//return float4(0.55f, 0.67f, 1.0f, 1.0f);
-	//return float4(input.Color, 1);
+}
+
+float4 PS_Gradiant(VertexOutput input) : SV_Target
+{
+	return float4(input.Color, 1);
 }
 
 technique11 T0
@@ -39,6 +43,12 @@ technique11 T0
 	pass P0
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
-		SetPixelShader(CompileShader(ps_5_0, PS()));
+		SetPixelShader(CompileShader(ps_5_0, PS_DiffuseColor()));
+	}
+
+	pass P1
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Gradiant()));
 	}
 }

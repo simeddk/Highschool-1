@@ -46,6 +46,11 @@ void Rect::CreateBuffer()
 		vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f);
 		vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f);
 		vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f);
+
+		vertices[0].Color = D3DXCOLOR(0.0f, 0.0f, 0.5f, 1.0f);
+		vertices[1].Color = D3DXCOLOR(0.0f, 0.5f, 0.5f, 1.0f);
+		vertices[2].Color = D3DXCOLOR(0.0f, 0.0f, 0.5f, 1.0f);
+		vertices[3].Color = D3DXCOLOR(0.0f, 0.5f, 0.5f, 1.0f);
 	}
 
 	//Create VertexBuffer

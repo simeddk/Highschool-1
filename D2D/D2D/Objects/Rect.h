@@ -35,6 +35,7 @@ private:
 	struct Vertex
 	{
 		Vector3 Position;
+		D3DXCOLOR Color;
 	};
 
 private:

@@ -13,11 +13,11 @@ void InitScene()
 	shader = new Shader(L"02_World.fx");
 
 	rect = new Rect(shader);
-	rect->Position(200, 500);
-	rect->Scale(100, 100);
-	rect->Color(1, 0, 0, 1);
+	rect->Position((float)Width * 0.5f, (float)Height * 0.5f);
+	rect->Scale((float)Width, (float)Height);
+	rect->Pass(1);
 
-	rect2 = new Rect(shader, Vector2(500, 500), Vector2(50, 50), Color(0, 0, 1, 1));
+	rect2 = new Rect(shader, Vector2(500, 500), Vector2(50, 50), Color(1, 0, 0, 1));
 }
 
 void DestroyScene()
@@ -38,6 +38,11 @@ void Update()
 
 	//Projection Matrix
 	D3DXMatrixOrthoOffCenterLH(&P, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
+
+	//Pass Test
+	static bool bCheck = true;
+	ImGui::Checkbox("Use Gradiant", &bCheck);
+	bCheck ? rect->Pass(1) : rect->Pass(0);
 
 	rect->Update(V, P);
 	rect2->Update(V, P);
