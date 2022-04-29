@@ -177,6 +177,8 @@ WPARAM Running()
     Time::Create();
     Time::Get()->Start();
 
+    Context::Create();
+
     Key = new Keyboard();
 
     InitScene();
@@ -195,14 +197,26 @@ WPARAM Running()
         {
             Time::Get()->Update();
             ImGui::Update();
+
+            Context::Get()->Update();
             Update();
-            Render();
+
+            Context::Get()->Render();
+
+            D3DXCOLOR bgcolor = D3DXCOLOR(0.15f, 0.15f, 0.15f, 1.0f);
+            DeviceContext->ClearRenderTargetView(RTV, (float*)bgcolor);
+            {
+                Render();
+            }
+            ImGui::Render();
+            SwapChain->Present(0, 0);
         }
     }
     /////////////////////////////
     DestroyScene();
 
     SafeDelete(Key);
+    Context::Delete();
     ImGui::Delete();
     Time::Delete();
 

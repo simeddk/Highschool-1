@@ -26,6 +26,9 @@
     <ClInclude Include="Systems\Device.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Renders\Context.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="Systems\Device.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\Context.cpp">
+      <Filter>Renders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

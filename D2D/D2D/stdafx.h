@@ -49,9 +49,12 @@ typedef D3DXMATRIX Matrix;
 //Framework
 #include "Systems/Keyboard.h"
 #include "Systems/Time.h"
+
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
+
 #include "Renders/Shader.h"
+#include "Renders/Context.h"
 
 //Glbal Variable
 const UINT Width = 1024;

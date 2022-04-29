@@ -4,7 +4,6 @@
 #include "Objects/MovableRect.h"
 
 Shader* shader = nullptr;
-Matrix V, P;
 
 struct Vertex
 {
@@ -18,6 +17,7 @@ ID3D11ShaderResourceView* srv = nullptr;
 void InitScene()
 {
 	shader = new Shader(L"03_Texture.fx");
+	Context::Get()->SetShader(shader);
 
 	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f);
 	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.0f);
@@ -32,13 +32,6 @@ void InitScene()
 	vertices[3].Uv = Vector2(1, 1);
 	vertices[4].Uv = Vector2(0, 0);
 	vertices[5].Uv = Vector2(1, 0);
-
-	/*vertices[0].Uv = Vector2(0.5f, 1);
-	vertices[1].Uv = Vector2(0.5f, 0);
-	vertices[2].Uv = Vector2(1, 1);
-	vertices[3].Uv = Vector2(1, 1);
-	vertices[4].Uv = Vector2(0.5f, 0);
-	vertices[5].Uv = Vector2(1, 0);*/
 
 	//Create VertexBuffer
 	{
@@ -82,66 +75,51 @@ void Update()
 
 void Render()
 {
-	D3DXCOLOR bgcolor = D3DXCOLOR(0.15f, 0.15f, 0.15f, 1.0f);
-	DeviceContext->ClearRenderTargetView(RTV, (float*)bgcolor);
+	
+	//World
+	Matrix W, S, T;
+	D3DXMatrixScaling(&S, 380, 300, 1);
+	D3DXMatrixTranslation(&T, 500, 350, 0);
+	W = S * T;
+
+	//SetParams
+	shader->AsMatrix("World")->SetMatrix(W);
+	shader->AsSRV("TextureMap")->SetResource(srv);
+
+	//Pass Test
+	static UINT pass = 4;
+	ImGui::SliderInt("Pass", (int*)&pass, 0, 4);
+		
+	if (pass == 3)
 	{
-		//World
-		Matrix W, S, T;
-		D3DXMatrixScaling(&S, 380, 300, 1);
-		D3DXMatrixTranslation(&T, 500, 350, 0);
-		W = S * T;
-
-		//View
-		Vector3 eye = Vector3(0, 0, 0);
-		Vector3 at = Vector3(0, 0, 1);
-		Vector3 up = Vector3(0, 1, 0);
-		D3DXMatrixLookAtLH(&V, &eye, &(eye + at), &up);
-
-		//Projection
-		D3DXMatrixOrthoOffCenterLH(&P, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
-		
-		//SetParams
-		shader->AsMatrix("World")->SetMatrix(W);
-		shader->AsMatrix("View")->SetMatrix(V);
-		shader->AsMatrix("Projection")->SetMatrix(P);
-
-		shader->AsSRV("TextureMap")->SetResource(srv);
-
-		//Pass Test
-		static UINT pass = 4;
-		ImGui::SliderInt("Pass", (int*)&pass, 0, 4);
-		
-		if (pass == 3)
-		{
-			static UINT filter = 0;
-			ImGui::SliderInt("Filter", (int*)&filter, 0, 1);
-			shader->AsScalar("Filter")->SetInt(filter);
-		}
-
-		if (pass == 4)
-		{
-			static float time = 0;
-			ImGui::SliderFloat("Time", &time, 0, 1);
-			shader->AsScalar("Time")->SetFloat(sinf(time * 5.0f) * 0.5f + 0.5f);
-
-			time = Time::Get()->Running();
-			ImGui::LabelText("Elpased Time", "%.2f", time);
-
-		}
-
-		//DrawCall
-		UINT stride = sizeof(Vertex);
-		UINT offset = 0;
-		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		shader->Draw(0, pass, 6);
-
-		D3DXMatrixScaling(&S, 380 * 0.98f, 300 * 0.98f, 1);
-		D3DXMatrixTranslation(&T, 800, 350, 0);
-		W = S * T;
-		shader->AsMatrix("World")->SetMatrix(W);
-		shader->Draw(0, 3, 6);
+		static UINT filter = 0;
+		ImGui::SliderInt("Filter", (int*)&filter, 0, 1);
+		shader->AsScalar("Filter")->SetInt(filter);
 	}
-	ImGui::Render();
-	SwapChain->Present(0, 0);
+
+	if (pass == 4)
+	{
+		static float time = 0;
+		ImGui::SliderFloat("Time", &time, 0, 1);
+		shader->AsScalar("Time")->SetFloat(sinf(time * 5.0f) * 0.5f + 0.5f);
+
+		time = Time::Get()->Running();
+		ImGui::LabelText("Elpased Time", "%.2f", time);
+
+	}
+
+	//DrawCall
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+	DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	shader->Draw(0, pass, 6);
+
+	D3DXMatrixScaling(&S, 380 * 0.98f, 300 * 0.98f, 1);
+	D3DXMatrixTranslation(&T, 800, 350, 0);
+	W = S * T;
+	shader->AsMatrix("World")->SetMatrix(W);
+	shader->Draw(0, 3, 6);
+	
+	
 }
