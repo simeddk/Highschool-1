@@ -108,8 +108,8 @@ void Render()
 		shader->AsSRV("TextureMap")->SetResource(srv);
 
 		//Pass Test
-		static UINT pass = 0;
-		ImGui::SliderInt("Pass", (int*)&pass, 0, 3);
+		static UINT pass = 4;
+		ImGui::SliderInt("Pass", (int*)&pass, 0, 4);
 		
 		if (pass == 3)
 		{
@@ -118,12 +118,29 @@ void Render()
 			shader->AsScalar("Filter")->SetInt(filter);
 		}
 
+		if (pass == 4)
+		{
+			static float time = 0;
+			ImGui::SliderFloat("Time", &time, 0, 1);
+			shader->AsScalar("Time")->SetFloat(sinf(time * 5.0f) * 0.5f + 0.5f);
+
+			time = Time::Get()->Running();
+			ImGui::LabelText("Elpased Time", "%.2f", time);
+
+		}
+
 		//DrawCall
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
 		DeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		shader->Draw(0, pass, 6);
+
+		D3DXMatrixScaling(&S, 380 * 0.98f, 300 * 0.98f, 1);
+		D3DXMatrixTranslation(&T, 800, 350, 0);
+		W = S * T;
+		shader->AsMatrix("World")->SetMatrix(W);
+		shader->Draw(0, 3, 6);
 	}
 	ImGui::Render();
 	SwapChain->Present(0, 0);

@@ -80,6 +80,21 @@ float4 PS_Filter(VertexOutput input) : SV_Target
 		return TextureMap.Sample(PointSampler, input.Uv);
 }
 
+float Time = 0;
+float4 PS_Lerp(VertexOutput input) : SV_Target
+{
+	float4 diffuse = TextureMap.Sample(PointSampler, input.Uv);
+	float4 red = float4(1, 0, 0, diffuse.a) + diffuse;
+
+	float4 flipRed = lerp(diffuse, red, Time);
+	
+	float originAlpha = diffuse.a;
+	float flipAlpha = lerp(originAlpha, 0.0f, 1 - Time);
+
+	return float4(flipRed.rgb, flipAlpha);
+
+}
+
 technique11 T0
 {
 	pass P0
@@ -108,6 +123,14 @@ technique11 T0
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetPixelShader(CompileShader(ps_5_0, PS_Filter()));
+
+		SetBlendState(Translucent, float4(0, 0, 0, 0), 0xFF);
+	}
+
+	pass P4
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Lerp()));
 
 		SetBlendState(Translucent, float4(0, 0, 0, 0), 0xFF);
 	}
