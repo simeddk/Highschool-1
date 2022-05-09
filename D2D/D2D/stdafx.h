@@ -7,6 +7,7 @@
 
 //STL
 #include <vector>
+#include <map>
 #include <string>
 #include <bitset>
 #include <algorithm>
@@ -55,6 +56,7 @@ typedef D3DXMATRIX Matrix;
 
 #include "Renders/Shader.h"
 #include "Renders/Context.h"
+#include "Renders/Sprite.h"
 
 //Glbal Variable
 const UINT Width = 1024;
