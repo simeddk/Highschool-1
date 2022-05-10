@@ -6,6 +6,7 @@
 Shader* shader = nullptr;
 Sprite* scopeDog = nullptr;
 Sprite* marioSheet = nullptr;
+Sprite* marioSheet2 = nullptr;
 
 void InitScene()
 {
@@ -19,6 +20,10 @@ void InitScene()
 	marioSheet = new Sprite(shader, L"MarioSheet.png", 70, 248, 117, 327);
 	marioSheet->Position(650, 300);
 	marioSheet->Scale(marioSheet->TextureSize());
+
+	marioSheet2 = new Sprite(shader, L"MarioSheet.png", 194, 253, 246, 323);
+	marioSheet2->Position(500, 600);
+	marioSheet2->Scale(marioSheet->TextureSize());
 }
 
 void DestroyScene()
@@ -26,16 +31,19 @@ void DestroyScene()
 	SafeDelete(shader);
 	SafeDelete(scopeDog);
 	SafeDelete(marioSheet);
+	SafeDelete(marioSheet2);
 }
 
 void Update()
 {
 	scopeDog->Update();
 	marioSheet->Update();
+	marioSheet2->Update();
 }
 
 void Render()
 {
 	scopeDog->Render();
 	marioSheet->Render();
+	marioSheet2->Render();
 }
