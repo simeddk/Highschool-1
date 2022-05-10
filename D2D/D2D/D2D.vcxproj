@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Background_Mario.h" />
     <ClInclude Include="Objects\MovableRect.h" />
     <ClInclude Include="Objects\Rect.h" />
     <ClInclude Include="Renders\Context.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Utilities\String.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Background_Mario.cpp" />
     <ClCompile Include="Objects\MovableRect.cpp" />
     <ClCompile Include="Objects\Rect.cpp" />
     <ClCompile Include="Renders\Context.cpp" />

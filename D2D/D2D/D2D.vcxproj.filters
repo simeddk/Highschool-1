@@ -32,6 +32,9 @@
     <ClInclude Include="Renders\Sprite.h">
       <Filter>Renders</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Background_Mario.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="Renders\Sprite.cpp">
       <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Background_Mario.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
