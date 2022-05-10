@@ -53,6 +53,7 @@ typedef D3DXMATRIX Matrix;
 
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
+#include "Utilities/Math.h"
 
 #include "Renders/Shader.h"
 #include "Renders/Context.h"
