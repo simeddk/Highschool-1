@@ -11,7 +11,6 @@ vector<Bullet*> bullets;
 float delay = 0.01f;
 float pressTime = 0.05f;
 
-//Todo. 총알 삭제
 
 void InitScene()
 {
@@ -76,8 +75,23 @@ void Update()
 	background->Update();
 	marioSheet->Update();
 
-	for (Bullet* bullet : bullets)
+	//총알 삭제 & 총알 업데이트
+	vector<Bullet*>::iterator it = bullets.begin();
+	for (it; it != bullets.end(); ++it)
+	{
+		Bullet* bullet = *it;
 		bullet->Update();
+
+		if ((bullet->Position().y > Height) || //Top
+			(bullet->Position().x > Width) || //Right
+			(bullet->Position().x < 0) || //Left
+			(bullet->Position().y < 0) //Bottom
+			)
+		{
+			bullets.erase(it);
+			break;
+		}
+	}
 }
 
 void Render()

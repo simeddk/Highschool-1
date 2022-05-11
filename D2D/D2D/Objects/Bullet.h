@@ -9,6 +9,8 @@ public:
 	void Update();
 	void Render();
 
+	Vector2 Position() { return position; }
+
 private:
 	Sprite* sprite;
 
