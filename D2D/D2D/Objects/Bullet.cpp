@@ -6,7 +6,6 @@ Bullet::Bullet(Shader* shader, Vector2 start, float angle, float speed)
 {
 	sprite = new Sprite(shader, L"bullet.png", 37, 116, 53, 133);
 	sprite->Position(position);
-	sprite->Scale(sprite->TextureSize());
 
 	float radian = Math::ToRadian(angle);
 	Vector2 direction;

@@ -147,7 +147,7 @@ void Sprite::Scale(Vector2& vec)
 void Sprite::UpdateWorld()
 {
 	Matrix S, T;
-	D3DXMatrixScaling(&S, scale.x, scale.y, 1);
+	D3DXMatrixScaling(&S, textureSize.x * scale.x, textureSize.y * scale.y, 1);
 	D3DXMatrixTranslation(&T, position.x, position.y, 0);
 	world = S * T;
 

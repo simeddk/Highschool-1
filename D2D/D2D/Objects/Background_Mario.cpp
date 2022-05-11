@@ -10,14 +10,6 @@ Background_Mario::Background_Mario(Shader* shader)
 
 	bush[0] = new Sprite(shader, L"Bush.png");
 	bush[1] = new Sprite(shader, L"Bush2.png");
-
-	cloud[0]->Scale(cloud[0]->TextureSize());
-	cloud[1]->Scale(cloud[1]->TextureSize());
-	
-	tile->Scale(tile->TextureSize());
-
-	bush[0]->Scale(bush[0]->TextureSize());
-	bush[1]->Scale(bush[1]->TextureSize());
 }
 
 Background_Mario::~Background_Mario()
@@ -61,12 +53,12 @@ void Background_Mario::Render()
 	bush[1]->Render();
 
 	bush[0]->Position(300, 140);
-	bush[0]->Render();
+	bush[0]->Render(); 
 
 	bush[0]->Position(950, 140);
 	bush[0]->Render();
 
-	float tileWidth = tile->Scale().x;
+	float tileWidth = tile->TextureSize().x * tile->Scale().x;
 
 	for (int i = 0; i < 9; i++)
 	{
