@@ -124,6 +124,16 @@ void Clip::Speed(float val)
 	speed = val;
 }
 
+Sprite* Clip::GetCurrentFrameAsSprite()
+{
+	return frames[currentFrame]->Image;
+}
+
+Vector2 Clip::ScaledTextureSize()
+{
+	return GetCurrentFrameAsSprite()->ScaledTextureSize();
+}
+
 void Clip::Position(float x, float y)
 {
 	Position(Vector2(x, y));

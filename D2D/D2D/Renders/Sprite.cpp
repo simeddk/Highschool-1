@@ -120,6 +120,11 @@ void Sprite::Render()
 	shader->DrawIndexed(0, pass, 6);
 }
 
+Vector2 Sprite::ScaledTextureSize()
+{
+	return Vector2(textureSize.x * scale.x, textureSize.y * scale.y);
+}
+
 void Sprite::Position(float x, float y)
 {
 	Position(Vector2(x, y));

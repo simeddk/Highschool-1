@@ -29,6 +29,10 @@ public:
 
 	void Speed(float val);
 
+	UINT GetCurrentFrameAsIndex() { return currentFrame; }
+	Sprite* GetCurrentFrameAsSprite();
+	Vector2 ScaledTextureSize();
+
 public:
 	void Position(float x, float y);
 	void Position(Vector2& vec);

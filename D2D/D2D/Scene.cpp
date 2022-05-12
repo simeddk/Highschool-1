@@ -14,9 +14,9 @@ void InitScene()
 	background = new Background_Mario(shader);
 
 	clip = new Clip(EPlayType::Loop);
-	clip->AddFrame(new Sprite(shader, L"Tarma.png", 4, 2, 34, 40), 0.22f);
-	clip->AddFrame(new Sprite(shader, L"Tarma.png", 35, 2, 64, 40), 0.22f);
-	clip->AddFrame(new Sprite(shader, L"Tarma.png", 64, 2, 94, 40), 0.22f);
+	clip->AddFrame(new Sprite(shader, L"Marco.png", 4, 2, 34, 40), 0.22f);
+	clip->AddFrame(new Sprite(shader, L"Marco.png", 35, 2, 64, 40), 0.22f);
+	clip->AddFrame(new Sprite(shader, L"Marco.png", 64, 2, 94, 40), 0.22f);
 	clip->Play();
 	//clip->Speed(5.2f);
 

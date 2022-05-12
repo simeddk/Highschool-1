@@ -21,8 +21,10 @@ public:
 
 	void Pass(UINT pass) { this->pass = pass; }
 	Shader* GetShader() { return shader; }
-	Vector2 TextureSize() { return textureSize; }
 	Matrix World() { return world; }
+	
+	Vector2 TextureSize() { return textureSize; }
+	Vector2 ScaledTextureSize();
 
 public:
 	void Position(float x, float y);

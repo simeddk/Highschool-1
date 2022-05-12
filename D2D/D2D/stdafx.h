@@ -40,6 +40,12 @@ using namespace std;
 #define SafeDelete(p) { if(p) { delete (p); (p) = nullptr; } }
 #define SafeDeleteArray(p) { if(p) { delete[] (p); (p) = nullptr; } }
 #define Check(hr) { assert(SUCCEEDED(hr)); }
+#define CheckNull(p) { if(p == nullptr) return; }
+#define CheckTrue(p) { if(p == true) return; }
+#define CheckFalse(p) { if(p == false) return; }
+#define CheckNullResult(p, result) { if(p == nullptr) return result; }
+#define CheckTrueResult(p, result) { if(p == true) return result; }
+#define CheckFalseResult(p, result) { if(p == false) return result; }
 
 //Typedef
 typedef D3DXVECTOR3 Vector3;
