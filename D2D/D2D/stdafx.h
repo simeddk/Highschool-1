@@ -65,6 +65,7 @@ typedef D3DXMATRIX Matrix;
 #include "Renders/Context.h"
 #include "Renders/Sprite.h"
 #include "Renders/Clip.h"
+#include "Renders/Animation.h"
 
 //Glbal Variable
 const UINT Width = 1024;

@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "Systems/Device.h"
 #include "Objects/Background_Mario.h"
+#include "Objects/Marco.h"
 
 Shader* shader = nullptr;
 Background_Mario* background = nullptr;
-Clip* clip = nullptr;
+Marco* marco = nullptr;
 
 void InitScene()
 {
@@ -12,33 +13,24 @@ void InitScene()
 	Context::Get()->SetShader(shader);
 
 	background = new Background_Mario(shader);
-
-	clip = new Clip(EPlayType::Loop);
-	clip->AddFrame(new Sprite(shader, L"Marco.png", 4, 2, 34, 40), 0.22f);
-	clip->AddFrame(new Sprite(shader, L"Marco.png", 35, 2, 64, 40), 0.22f);
-	clip->AddFrame(new Sprite(shader, L"Marco.png", 64, 2, 94, 40), 0.22f);
-	clip->Play();
-	//clip->Speed(5.2f);
-
-	clip->Position(100, 170);
-	clip->Scale(2.5f, 2.5f);
+	marco = new Marco(shader, Vector2(100, 171), Vector2(2.5f, 2.5f));
 }
 
 void DestroyScene()
 {
 	SafeDelete(shader);
 	SafeDelete(background);
-	SafeDelete(clip);
+	SafeDelete(marco);
 }
 
 void Update()
 {
 	background->Update();
-	clip->Update();
+	marco->Update();
 }
 
 void Render()
 {
 	background->Render();
-	clip->Render();
+	marco->Render();
 }

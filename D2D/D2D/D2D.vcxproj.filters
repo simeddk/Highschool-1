@@ -47,6 +47,9 @@
     <ClInclude Include="Renders\Animation.h">
       <Filter>Renders</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Marco.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -95,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="Renders\Animation.cpp">
       <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Marco.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

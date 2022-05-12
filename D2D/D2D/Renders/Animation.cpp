@@ -37,7 +37,7 @@ void Animation::Play(int clipIndex)
 {
 	CheckTrue(currentClip == clipIndex);
 
-	if (clipIndex > -1)
+	if (currentClip > -1)
 		clips[currentClip]->Stop();
 	
 	currentClip = clipIndex;
@@ -86,5 +86,5 @@ Clip* Animation::GetCurrentClip()
 
 Sprite* Animation::GetCurrentFrameAsSprite()
 {
-	return clips[currentClip]->GetCurrentFrameAsSprite();
+	return GetCurrentClip()->GetCurrentFrameAsSprite();
 }
