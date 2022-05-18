@@ -32,6 +32,11 @@ VertexOutput VS(VertexInput input)
 	return output;
 }
 
+RasterizerState CullMode_None
+{
+	CullMode = None;
+};
+
 BlendState Translucent
 {
 	BlendEnable[0] = true;
@@ -60,7 +65,8 @@ technique11 T0
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetPixelShader(CompileShader(ps_5_0, PS()));
-
+		
+		SetRasterizerState(CullMode_None);
 		SetBlendState(Translucent, float4(0, 0, 0, 0), 0xFF);
 	}
 }

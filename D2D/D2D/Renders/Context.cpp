@@ -57,7 +57,7 @@ void Context::Update()
 	D3DXMatrixLookAtLH(&desc.View, &eye, &(eye + at), &up);
 
 	//Projection
-	D3DXMatrixOrthoOffCenterLH(&desc.Projection, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
+	D3DXMatrixOrthoOffCenterLH(&desc.Projection, 0.f, (float)Width, 0, (float)Height, -1000.f, +1000.f);
 }
 
 

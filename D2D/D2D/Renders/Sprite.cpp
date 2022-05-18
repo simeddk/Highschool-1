@@ -149,12 +149,49 @@ void Sprite::Scale(Vector2& vec)
 	UpdateWorld();
 }
 
+void Sprite::Rotation(float x, float y, float z)
+{
+	Rotation(Vector3(x, y, z));
+}
+
+void Sprite::Rotation(Vector3& vec)
+{
+	rotation = vec;
+
+	UpdateWorld();
+}
+
+void Sprite::RotationDegree(float x, float y, float z)
+{
+	RotationDegree(Vector3(x, y, z));
+}
+
+void Sprite::RotationDegree(Vector3& vec)
+{
+	vec.x =	Math::ToRadian(vec.x);
+	vec.y =	Math::ToRadian(vec.y);
+	vec.z =	Math::ToRadian(vec.z);
+
+	Rotation(vec);
+}
+
+Vector3 Sprite::RotationDegree()
+{
+	Vector3 vec;
+	vec.x = Math::ToDegree(rotation.x);
+	vec.y = Math::ToDegree(rotation.y);
+	vec.z = Math::ToDegree(rotation.z);
+
+	return vec;
+}
+
 void Sprite::UpdateWorld()
 {
-	Matrix S, T;
+	Matrix S, R, T;
 	D3DXMatrixScaling(&S, textureSize.x * scale.x, textureSize.y * scale.y, 1);
+	D3DXMatrixRotationY(&R, rotation.y);
 	D3DXMatrixTranslation(&T, position.x, position.y, 0);
-	world = S * T;
+	world = S * R * T;
 
 	//sWorld->SetMatrix(world);
 }
