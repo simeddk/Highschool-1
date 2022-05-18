@@ -43,6 +43,10 @@ public:
 	void RotationDegree(Vector3& vec);
 	Vector3 RotationDegree();
 
+	Vector3 Right();
+	Vector3 Up();
+	Vector3 Foward();
+
 
 private:
 	struct Vertex

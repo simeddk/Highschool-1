@@ -185,11 +185,35 @@ Vector3 Sprite::RotationDegree()
 	return vec;
 }
 
+Vector3 Sprite::Right()
+{
+	Vector3 vec;
+	D3DXVec3Normalize(&vec, &Vector3(world._11, world._12, world._13));
+	
+	return vec;
+}
+
+Vector3 Sprite::Up()
+{
+	Vector3 vec;
+	D3DXVec3Normalize(&vec, &Vector3(world._21, world._22, world._23));
+
+	return vec;
+}
+
+Vector3 Sprite::Foward()
+{
+	Vector3 vec;
+	D3DXVec3Normalize(&vec, &Vector3(world._31, world._32, world._33));
+
+	return vec;
+}
+
 void Sprite::UpdateWorld()
 {
 	Matrix S, R, T;
 	D3DXMatrixScaling(&S, textureSize.x * scale.x, textureSize.y * scale.y, 1);
-	D3DXMatrixRotationY(&R, rotation.y);
+	D3DXMatrixRotationYawPitchRoll(&R, rotation.y, rotation.x, rotation.z);
 	D3DXMatrixTranslation(&T, position.x, position.y, 0);
 	world = S * R * T;
 

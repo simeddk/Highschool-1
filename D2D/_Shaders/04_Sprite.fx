@@ -35,6 +35,7 @@ VertexOutput VS(VertexInput input)
 RasterizerState CullMode_None
 {
 	CullMode = None;
+	DepthClipEnable = false;
 };
 
 BlendState Translucent
