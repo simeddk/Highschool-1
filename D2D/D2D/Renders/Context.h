@@ -20,6 +20,7 @@ public:
 	const Matrix& GetProjection() { return desc.Projection; }
 
 	class Camera* GetCamera() { return camera; }
+	void SetFollowMode(class IFollow* focusObject = nullptr);
 
 private:
 	struct ViewProjectionDesc

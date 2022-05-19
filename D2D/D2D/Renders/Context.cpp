@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Context.h"
+#include "Viewer/IFollow.h"
 
 Context* Context::instance = nullptr;
 
@@ -72,4 +73,10 @@ void Context::Render()
 	DeviceContext->Unmap(viewProjectionBuffer, 0);
 
 	sViewProjectionBuffer->SetConstantBuffer(viewProjectionBuffer);
+}
+
+void Context::SetFollowMode(IFollow* focusObject)
+{
+	SafeDelete(camera);
+	camera = new Follow(focusObject);
 }

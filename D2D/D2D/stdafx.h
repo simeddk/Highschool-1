@@ -69,6 +69,7 @@ typedef D3DXMATRIX Matrix;
 
 #include "Viewer/Camera.h"
 #include "Viewer/Freedom.h"
+#include "Viewer/Follow.h"
 
 //Glbal Variable
 const UINT Width = 800;

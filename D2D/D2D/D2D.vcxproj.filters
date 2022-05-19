@@ -56,6 +56,12 @@
     <ClInclude Include="Viewer\Freedom.h">
       <Filter>Viewer</Filter>
     </ClInclude>
+    <ClInclude Include="Viewer\IFollow.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\Follow.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -112,6 +118,9 @@
       <Filter>Viewer</Filter>
     </ClCompile>
     <ClCompile Include="Viewer\Freedom.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer\Follow.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
   </ItemGroup>
