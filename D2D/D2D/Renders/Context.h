@@ -19,6 +19,8 @@ public:
 	const Matrix& GetView() { return desc.View; }
 	const Matrix& GetProjection() { return desc.Projection; }
 
+	class Camera* GetCamera() { return camera; }
+
 private:
 	struct ViewProjectionDesc
 	{
@@ -33,5 +35,7 @@ private:
 	Shader* shader = nullptr;
 	ID3D11Buffer* viewProjectionBuffer = nullptr;
 	ID3DX11EffectConstantBuffer* sViewProjectionBuffer = nullptr;
+
+	class Camera* camera = nullptr;
 
 };

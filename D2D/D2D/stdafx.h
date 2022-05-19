@@ -67,9 +67,12 @@ typedef D3DXMATRIX Matrix;
 #include "Renders/Clip.h"
 #include "Renders/Animation.h"
 
+#include "Viewer/Camera.h"
+#include "Viewer/Freedom.h"
+
 //Glbal Variable
-const UINT Width = 1024;
-const UINT Height = 768;
+const UINT Width = 800;
+const UINT Height = 600;
 
 extern HWND Hwnd;
 extern wstring Title;

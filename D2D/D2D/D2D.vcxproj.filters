@@ -50,6 +50,12 @@
     <ClInclude Include="Objects\Marco.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Viewer\Camera.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\Freedom.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -102,6 +108,12 @@
     <ClCompile Include="Objects\Marco.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Viewer\Camera.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer\Freedom.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -115,6 +127,9 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{f5aeca80-49fd-45f9-b646-1fa3be9e3297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Viewer">
+      <UniqueIdentifier>{e2c30b5a-d171-4e3d-8b43-7075db7417c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -12,8 +12,10 @@ void InitScene()
 	shader = new Shader(L"04_Sprite.fx");
 	Context::Get()->SetShader(shader);
 
-	marco = new Marco(shader, Vector2(100, 171), Vector2(2.5f, 2.5f));
+	marco = new Marco(shader, Vector2(100, 140), Vector2(2.5f, 2.5f));
 	background = new Sprite(shader, L"Background/FinalFightStage.png");
+	background->Position(400, 300);
+	background->Scale(2.5f, 2.5f);
 }
 
 void DestroyScene()
@@ -25,6 +27,13 @@ void DestroyScene()
 
 void Update()
 {
+	static float speed = 200;
+	ImGui::SliderFloat("Camera Speed", (float*)&speed, 100, 1000);
+	
+	Freedom* freedom = dynamic_cast<Freedom*>(Context::Get()->GetCamera());
+	if (freedom != nullptr)
+		freedom->Speed(speed);
+
 	background->Update();
 	marco->Update();
 }

@@ -5,12 +5,14 @@ Context* Context::instance = nullptr;
 
 Context::Context()
 {
-
+	camera = new Freedom();
 }
 
 Context::~Context()
 {
 	SafeRelease(viewProjectionBuffer);
+	
+	SafeDelete(camera);
 }
 
 void Context::Create()
@@ -50,12 +52,8 @@ void Context::SetShader(Shader* shader)
 
 void Context::Update()
 {
-	//View
-	Vector3 eye = Vector3(0, 0, 0);
-	ImGui::SliderFloat3("Eye", (float*)&eye, -400, 400);
-	Vector3 at = Vector3(0, 0, 1);
-	Vector3 up = Vector3(0, 1, 0);
-	D3DXMatrixLookAtLH(&desc.View, &eye, &(eye + at), &up);
+	camera->Update();
+	desc.View = camera->View();
 
 	//Projection
 	D3DXMatrixOrthoOffCenterLH(&desc.Projection, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
