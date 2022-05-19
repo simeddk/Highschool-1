@@ -52,6 +52,7 @@ void Context::Update()
 {
 	//View
 	Vector3 eye = Vector3(0, 0, 0);
+	ImGui::SliderFloat3("Eye", (float*)&eye, -400, 400);
 	Vector3 at = Vector3(0, 0, 1);
 	Vector3 up = Vector3(0, 1, 0);
 	D3DXMatrixLookAtLH(&desc.View, &eye, &(eye + at), &up);
