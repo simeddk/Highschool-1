@@ -21,6 +21,9 @@ int APIENTRY WinMain
 	return 0;
 }
 
+UINT Width = 800;
+UINT Height = 600;
+
 HWND Hwnd = nullptr;
 wstring Title = L"D2D";
 
@@ -72,6 +75,20 @@ void InitWindow(HINSTANCE hInstance, int nCmdShow)
         );
         assert(Hwnd != nullptr);
     }
+
+    RECT rect = { 0, 0, (LONG)Width, (LONG)Height };
+    UINT centerX = (GetSystemMetrics(SM_CXSCREEN) - (UINT)Width) / 2;
+    UINT centerY = (GetSystemMetrics(SM_CYSCREEN) - (UINT)Height) / 2;
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+    MoveWindow
+    (
+        Hwnd,
+        centerX,
+        centerY,
+        rect.right - rect.left,
+        rect.bottom - rect.top,
+        TRUE
+    );
 
     ShowWindow(Hwnd, nCmdShow);
     UpdateWindow(Hwnd);
@@ -132,30 +149,7 @@ void InitDirect3D(HINSTANCE hInstance)
     );
     assert(SUCCEEDED(hr));
 
-    //BackBuffer
-    ID3D11Texture2D* firstFrame;
-    hr = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&firstFrame);
-    assert(SUCCEEDED(hr));
-
-    //Create RTV
-    hr = Device->CreateRenderTargetView(firstFrame, nullptr, &RTV);
-    assert(SUCCEEDED(hr));
-    firstFrame->Release();
-
-    //OMSet
-    DeviceContext->OMSetRenderTargets(1, &RTV, nullptr);
-   
-    //Create Viewport
-    {
-        D3D11_VIEWPORT viewport;
-        ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
-        viewport.TopLeftX = 0;
-        viewport.TopLeftY = 0;
-        viewport.Width = Width;
-        viewport.Height = Height;
-
-        DeviceContext->RSSetViewports(1, &viewport);
-    }
+    CreateBackBuffer();
 }
 
 void Destroy()
@@ -230,8 +224,60 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     switch (msg)
     {
+        case WM_SIZE:
+        {
+            Width = LOWORD(lParam);
+            Height = HIWORD(lParam);
+
+            ImGui::Invalidate();
+
+            if (Device != nullptr)
+            {
+                DeleteBackBuffer();
+                SwapChain->ResizeBuffers(0, Width, Height, DXGI_FORMAT_UNKNOWN, 0);
+                CreateBackBuffer();
+            }
+
+            ImGui::Validate();
+           
+        }
+        break;
+
         case WM_DESTROY: PostQuitMessage(0); break;
     }
 
     return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+void CreateBackBuffer()
+{
+    //BackBuffer
+    ID3D11Texture2D* firstFrame;
+    HRESULT hr = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&firstFrame);
+    assert(SUCCEEDED(hr));
+
+    //Create RTV
+    hr = Device->CreateRenderTargetView(firstFrame, nullptr, &RTV);
+    assert(SUCCEEDED(hr));
+    firstFrame->Release();
+
+    //OMSet
+    DeviceContext->OMSetRenderTargets(1, &RTV, nullptr);
+
+    //Create Viewport
+    {
+        D3D11_VIEWPORT viewport;
+        ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+        viewport.TopLeftX = 0;
+        viewport.TopLeftY = 0;
+        viewport.Width = (FLOAT)Width;
+        viewport.Height = (FLOAT)Height;
+
+        DeviceContext->RSSetViewports(1, &viewport);
+    }
+}
+
+void DeleteBackBuffer()
+{
+    SafeRelease(RTV);
 }

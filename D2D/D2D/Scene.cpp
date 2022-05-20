@@ -33,13 +33,16 @@ void DestroyScene()
 
 void Update()
 {
-	//프리덤 카메라 속도 테스트
-	//static float speed = 200;
-	//ImGui::SliderFloat("Camera Speed", (float*)&speed, 100, 1000);
-	//
-	//Freedom* freedom = dynamic_cast<Freedom*>(Context::Get()->GetCamera());
-	//if (freedom != nullptr)
-	//	freedom->Speed(speed);
+	static Vector2 test;
+	ImGui::SliderFloat2("Test", test, 1, 100);
+	
+	static bool bCheck;
+	ImGui::Checkbox("Check", &bCheck);
+
+	static Color color;
+	ImGui::ColorEdit3("Color", color);
+
+	ImGui::Text("%.f, %.2f", background->Position().x, background->Position().y);
 
 	//빨로우 포커스 체인지
 

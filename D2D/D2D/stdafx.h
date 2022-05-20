@@ -72,8 +72,8 @@ typedef D3DXMATRIX Matrix;
 #include "Viewer/Follow.h"
 
 //Glbal Variable
-const UINT Width = 800;
-const UINT Height = 600;
+extern UINT Width;
+extern UINT Height;
 
 extern HWND Hwnd;
 extern wstring Title;
