@@ -137,7 +137,7 @@ void InitDirect3D(HINSTANCE hInstance)
         nullptr,
         D3D_DRIVER_TYPE_HARDWARE,
         nullptr,
-        0,
+        D3D11_CREATE_DEVICE_BGRA_SUPPORT,
         featureLevel.data(),
         featureLevel.size(),
         D3D11_SDK_VERSION,
@@ -167,6 +167,8 @@ WPARAM Running()
 
     ImGui::Create(Hwnd, Device, DeviceContext);
     ImGui::StyleColorsDark();
+
+    DirectWrite::Create();
 
     Time::Create();
     Time::Get()->Start();
@@ -202,6 +204,13 @@ WPARAM Running()
             {
                 Render();
             }
+
+            DirectWrite::GetDC()->BeginDraw();
+            {
+                PostRender();
+            }
+            DirectWrite::GetDC()->EndDraw();
+
             ImGui::Render();
             SwapChain->Present(0, 0);
         }
@@ -213,6 +222,7 @@ WPARAM Running()
     Context::Delete();
     ImGui::Delete();
     Time::Delete();
+    DirectWrite::Delete();
 
     return msg.wParam;
 }
@@ -234,7 +244,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             if (Device != nullptr)
             {
                 DeleteBackBuffer();
+                DirectWrite::DeleteBackBuffer();
+
                 SwapChain->ResizeBuffers(0, Width, Height, DXGI_FORMAT_UNKNOWN, 0);
+
+                DirectWrite::CreateBackBuffer();
                 CreateBackBuffer();
             }
 

@@ -12,6 +12,7 @@ void InitScene();
 void DestroyScene();
 void Update();
 void Render();
+void PostRender();
 
 void CreateBackBuffer();
 void DeleteBackBuffer();

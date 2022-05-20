@@ -62,6 +62,9 @@
     <ClInclude Include="Viewer\Follow.h">
       <Filter>Viewer</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\DirectWrite.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Viewer\Follow.cpp">
       <Filter>Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\DirectWrite.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

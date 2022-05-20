@@ -66,3 +66,21 @@ void Render()
 	marco->Render();
 	marco2->Render();
 }
+
+void PostRender()
+{
+	static Color fontColor = Color(1, 1, 1, 1);
+	ImGui::ColorEdit4("Font Color", fontColor);
+
+	RECT rect = { 0, 0, 800, 200 };
+	wstring text = L"키스의 고유 조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다..";
+	DirectWrite::SetFontColor(fontColor);
+	DirectWrite::SetFontSize(17);
+	DirectWrite::RenderText(text, rect);
+
+	rect.top += 25;
+	rect.bottom += 25;
+	text = L"FPS : " + to_wstring(ImGui::GetIO().Framerate);
+	DirectWrite::SetFontColor(Color(1, 0, 0, 1));
+	DirectWrite::RenderText(text, rect);
+}

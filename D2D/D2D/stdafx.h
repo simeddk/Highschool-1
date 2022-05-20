@@ -35,6 +35,13 @@ using namespace std;
 #include <imguiDx11.h>
 #pragma comment(lib, "ImGui.lib")
 
+//DirectWrite
+#include <d2d1_2.h>
+#include <dwrite.h>
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
+
+
 //Macro
 #define SafeRelease(p) { if(p) { (p)->Release(); (p) = nullptr; } }
 #define SafeDelete(p) { if(p) { delete (p); (p) = nullptr; } }
@@ -56,6 +63,7 @@ typedef D3DXMATRIX Matrix;
 //Framework
 #include "Systems/Keyboard.h"
 #include "Systems/Time.h"
+#include "Systems/DirectWrite.h"
 
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
