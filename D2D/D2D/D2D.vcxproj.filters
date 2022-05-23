@@ -68,6 +68,9 @@
     <ClInclude Include="Renders\PerFrame.h">
       <Filter>Renders</Filter>
     </ClInclude>
+    <ClInclude Include="Collider\Collider.h">
+      <Filter>Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -135,6 +138,9 @@
     <ClCompile Include="Renders\PerFrame.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="Collider\Collider.cpp">
+      <Filter>Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -151,6 +157,9 @@
     </Filter>
     <Filter Include="Viewer">
       <UniqueIdentifier>{e2c30b5a-d171-4e3d-8b43-7075db7417c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collider">
+      <UniqueIdentifier>{fac917a8-3f01-4bc5-8aa1-dbf15f656911}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

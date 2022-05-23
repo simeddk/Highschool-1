@@ -6,9 +6,10 @@ Marco::Marco(Shader* shader, Vector2 position, Vector2 scale)
 {
 	animation = new Animation();
 
-	Clip* clip = nullptr;
-
 	perFrame = new PerFrame(shader);
+	collider = new Collider();
+
+	Clip* clip = nullptr;
 
 	//Clips[0] - Idle
 	{
@@ -46,6 +47,7 @@ Marco::~Marco()
 {
 	SafeDelete(animation);
 	SafeDelete(perFrame);
+	SafeDelete(collider);
 }
 
 void Marco::Update()
@@ -69,6 +71,7 @@ void Marco::Update()
 	animation->Position(position);
 
 	perFrame->Update();
+	collider->Update(GetWorld());
 	animation->Update();
 }
 
@@ -76,9 +79,15 @@ void Marco::Render()
 {
 	perFrame->Render();
 	animation->Render();
+	collider->Render();
 }
 
 void Marco::Focus(Vector2* focusPosition)
 {
 	*focusPosition = animation->Position() + focusOffset;
+}
+
+Matrix Marco::GetWorld()
+{
+	return animation->GetCurrentFrameAsSprite()->World();
 }

@@ -80,6 +80,8 @@ typedef D3DXMATRIX Matrix;
 #include "Viewer/Freedom.h"
 #include "Viewer/Follow.h"
 
+#include "Collider/Collider.h"
+
 //Glbal Variable
 extern UINT Width;
 extern UINT Height;

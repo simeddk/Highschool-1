@@ -13,6 +13,9 @@ public:
 
 	void Focus(Vector2* focusPosition) override;
 
+	Collider* GetCollider() { return collider; }
+	Matrix GetWorld();
+
 private:
 	Shader* shader = nullptr;
 	Animation* animation = nullptr;
@@ -20,4 +23,6 @@ private:
 
 	float speed = 200.0f;
 	Vector2 focusOffset = Vector2(180, 140);
+
+	Collider* collider = nullptr;
 };
