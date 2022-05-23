@@ -65,6 +65,9 @@
     <ClInclude Include="Systems\DirectWrite.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Renders\PerFrame.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp" />
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Systems\DirectWrite.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\PerFrame.cpp">
+      <Filter>Renders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

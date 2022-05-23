@@ -14,8 +14,9 @@ public:
 	void Focus(Vector2* focusPosition) override;
 
 private:
-	Shader* shader;
+	Shader* shader = nullptr;
 	Animation* animation = nullptr;
+	PerFrame* perFrame = nullptr;
 
 	float speed = 200.0f;
 	Vector2 focusOffset = Vector2(180, 140);

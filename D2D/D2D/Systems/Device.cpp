@@ -197,8 +197,6 @@ WPARAM Running()
             Context::Get()->Update();
             Update();
 
-            Context::Get()->Render();
-
             D3DXCOLOR bgcolor = D3DXCOLOR(0.15f, 0.15f, 0.15f, 1.0f);
             DeviceContext->ClearRenderTargetView(RTV, (float*)bgcolor);
             {

@@ -71,6 +71,7 @@ typedef D3DXMATRIX Matrix;
 
 #include "Renders/Shader.h"
 #include "Renders/Context.h"
+#include "Renders/PerFrame.h"
 #include "Renders/Sprite.h"
 #include "Renders/Clip.h"
 #include "Renders/Animation.h"

@@ -8,6 +8,8 @@ Marco::Marco(Shader* shader, Vector2 position, Vector2 scale)
 
 	Clip* clip = nullptr;
 
+	perFrame = new PerFrame(shader);
+
 	//Clips[0] - Idle
 	{
 		clip = new Clip(EPlayType::Loop);
@@ -43,6 +45,7 @@ Marco::Marco(Shader* shader, Vector2 position, Vector2 scale)
 Marco::~Marco()
 {
 	SafeDelete(animation);
+	SafeDelete(perFrame);
 }
 
 void Marco::Update()
@@ -65,11 +68,13 @@ void Marco::Update()
 	animation->Play(bMove ? 1 : 0);
 	animation->Position(position);
 
+	perFrame->Update();
 	animation->Update();
 }
 
 void Marco::Render()
 {
+	perFrame->Render();
 	animation->Render();
 }
 

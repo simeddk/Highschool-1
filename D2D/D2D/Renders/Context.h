@@ -12,31 +12,18 @@ private:
 	~Context();
 
 public:
-	void SetShader(Shader* shader);
 	void Update();
-	void Render();
 
-	const Matrix& GetView() { return desc.View; }
-	const Matrix& GetProjection() { return desc.Projection; }
+	const Matrix& GetView();
+	const Matrix& GetProjection();
 
 	class Camera* GetCamera() { return camera; }
 	void SetFollowMode(class IFollow* focusObject = nullptr);
 
 private:
-	struct ViewProjectionDesc
-	{
-		Matrix View;
-		Matrix Projection;
-	} desc;
-
-private:
 	static Context* instance;
 
 private:
-	Shader* shader = nullptr;
-	ID3D11Buffer* viewProjectionBuffer = nullptr;
-	ID3DX11EffectConstantBuffer* sViewProjectionBuffer = nullptr;
-
 	class Camera* camera = nullptr;
-
+	Matrix projection;
 };
