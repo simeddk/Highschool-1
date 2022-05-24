@@ -71,9 +71,18 @@
     <ClInclude Include="Collider\Collider.h">
       <Filter>Collider</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S01_Scene01Demo.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S02_Scene02Demo.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Systems\Keyboard.cpp">
       <Filter>Systems</Filter>
@@ -141,6 +150,12 @@
     <ClCompile Include="Collider\Collider.cpp">
       <Filter>Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\S01_Scene01Demo.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S02_Scene02Demo.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -160,6 +175,9 @@
     </Filter>
     <Filter Include="Collider">
       <UniqueIdentifier>{fac917a8-3f01-4bc5-8aa1-dbf15f656911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{070acfba-4d98-4ef9-a94e-360038e35f80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
