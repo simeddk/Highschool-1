@@ -19,6 +19,7 @@ public:
 
 	class Camera* GetCamera() { return camera; }
 	void SetFollowMode(class IFollow* focusObject = nullptr);
+	void SetFreedomMode();
 
 private:
 	static Context* instance;

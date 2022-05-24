@@ -11,6 +11,8 @@ S02_Scene02Demo::S02_Scene02Demo()
 	background = new Sprite(shader, L"Background/FinalFightStage.png");
 	background->Scale(2.5f, 2.5f);
 	background->Position(400, 300);
+
+	Context::Get()->SetFreedomMode();
 }
 
 S02_Scene02Demo::~S02_Scene02Demo()
@@ -22,6 +24,10 @@ S02_Scene02Demo::~S02_Scene02Demo()
 
 void S02_Scene02Demo::Update()
 {
+	Follow* follow = dynamic_cast<Follow*>(Context::Get()->GetCamera());
+	if (follow != nullptr)
+		Context::Get()->SetFreedomMode();
+
 	perFrame->Update();
 	background->Update();
 }

@@ -55,3 +55,9 @@ void Context::SetFollowMode(IFollow* focusObject)
 	SafeDelete(camera);
 	camera = new Follow(focusObject);
 }
+
+void Context::SetFreedomMode()
+{
+	SafeDelete(camera);
+	camera = new Freedom();
+}

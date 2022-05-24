@@ -24,6 +24,10 @@ S01_Scene01Demo::~S01_Scene01Demo()
 
 void S01_Scene01Demo::Update()
 {
+	Freedom* freedom = dynamic_cast<Freedom*>(Context::Get()->GetCamera());
+	if (freedom != nullptr)
+		Context::Get()->SetFollowMode(marco);
+
 	perFrame->Update();
 	background->Update();
 	marco->Update();
