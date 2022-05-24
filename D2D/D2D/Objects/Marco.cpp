@@ -67,6 +67,17 @@ void Marco::Update()
 		animation->RotationDegree(0, 180, 0);
 	}
 
+	if (Key->Press('W'))
+	{
+		position.y += speed * Time::Delta();
+		bMove = true;
+	}
+	else if (Key->Press('S'))
+	{
+		position.y -= speed * Time::Delta();
+		bMove = true;
+	}
+
 	animation->Play(bMove ? 1 : 0);
 	animation->Position(position);
 

@@ -4,14 +4,13 @@
 #include "Scenes/Scene.h"
 #include "Scenes/S01_Scene01Demo.h"
 #include "Scenes/S02_Scene02Demo.h"
+#include "Scenes/S03_AabbDemo.h"
 
 vector<Scene*> scenes;
-UINT sceneIndex = 0;
 
-void InitScene()
+void InitScene() // ȣ�ηѷηѷѷѷηηηѷѷηηηηѷηηηηηѷѷѷηηѷѷηηηη�
 {
-	scenes.push_back(new S01_Scene01Demo());
-	scenes.push_back(new S02_Scene02Demo());
+	scenes.push_back(new S03_AabbDemo());
 }
 
 void DestroyScene()
@@ -22,23 +21,14 @@ void DestroyScene()
 
 void Update()
 {
-	const char* sceneList[] = { "Mario Stage", "Final Fight Stage" };
-
-	ImGui::Combo("Select Scene", (int*)&sceneIndex, sceneList, 2);
-	ImGui::Text("%d", sceneIndex);
-	
-	scenes[sceneIndex]->Update();
-
-	/*for (Scene* scene : scenes)
-		scene->Update();*/
+	for (Scene* scene : scenes)
+		scene->Update();
 }
 
 void Render()
 {
-	scenes[sceneIndex]->Render();
-
-	/*for (Scene* scene : scenes)
-		scene->Render();*/
+	for (Scene* scene : scenes)
+		scene->Render();
 }
 
 void PostRender()
