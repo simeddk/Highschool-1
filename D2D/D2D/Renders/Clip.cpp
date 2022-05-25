@@ -88,6 +88,8 @@ void Clip::AddFrame(Sprite* sprite, float time)
 
 void Clip::Play()
 {
+	CheckTrue(bPlaying);
+
 	bPlaying = true;
 	currentFrame = 0;
 	playTime = 0.0f;
@@ -95,6 +97,8 @@ void Clip::Play()
 
 void Clip::Play(UINT startFrame)
 {
+	CheckTrue(bPlaying);
+
 	bPlaying = true;
 	currentFrame = startFrame;
 	playTime = 0.0f;
@@ -102,6 +106,8 @@ void Clip::Play(UINT startFrame)
 
 void Clip::Stop()
 {
+	CheckFalse(bPlaying);
+
 	bPlaying = false;
 
 	switch (playType)

@@ -9,14 +9,14 @@ public:
 	void Update();
 	void Render();
 
-	void Position(Vector2& vec) { position = vec; }
-	Vector2 Position() { return position; }
-
-	void Scale(Vector2& vec) { scale = vec; }
-	Vector2 Scale() { return scale; }
+	Vector2& Position() { return position; }
+	Vector2& Scale() { return scale; }
 
 	Matrix GetWorld();
 	Collider* GetCollider() { return collider; }
+
+	void Play();
+	void Stop();
 
 private:
 	Clip* clip;

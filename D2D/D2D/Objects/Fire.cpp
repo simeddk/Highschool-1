@@ -53,3 +53,13 @@ Matrix Fire::GetWorld()
 {
 	return clip->GetCurrentFrameAsSprite()->World();
 }
+
+void Fire::Play()
+{
+	clip->Play();
+}
+
+void Fire::Stop()
+{
+	clip->Stop();
+}

@@ -19,4 +19,7 @@ private:
 	class Marco* marco = nullptr;
 	class Marker* marker = nullptr;
 	class Fire* fire = nullptr;
+
+	Matrix trigger;
+	Collider* triggerCollider = nullptr;
 };

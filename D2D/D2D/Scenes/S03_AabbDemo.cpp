@@ -11,6 +11,10 @@ S03_AabbDemo::S03_AabbDemo()
 	marco = new Marco(shader, Vector2(170, 100), Vector2(2.5f, 2.5f));
 	marker = new Marker(shader, Vector2(250, 250));
 	fire = new Fire(shader, Vector2(350, 170), Vector2(1.5f, 1.5f));
+
+	D3DXMatrixIdentity(&trigger);
+	triggerCollider = new Collider();
+
 }
 
 S03_AabbDemo::~S03_AabbDemo()
@@ -19,6 +23,7 @@ S03_AabbDemo::~S03_AabbDemo()
 	SafeDelete(marco);
 	SafeDelete(marker);
 	SafeDelete(fire);
+	SafeDelete(triggerCollider);
 }
 
 void S03_AabbDemo::Update()
@@ -31,13 +36,19 @@ void S03_AabbDemo::Update()
 	ImGui::LabelText("Matrix vs Matrix", "%d", bAabb2);
 	bAabb2 ? fire->GetCollider()->SetHit() : fire->GetCollider()->SetMiss();
 
-	Vector2 firePosition = fire->Position();
-	ImGui::SliderFloat2("Fire Position", firePosition, -400, 400);
-	fire->Position(firePosition);
+	ImGui::SliderFloat2("Fire Position", fire->Position(), -400, 400);
+	ImGui::SliderFloat2("Fire Scale", fire->Scale(), 1, 10);
 
-	Vector2 fireScale = fire->Scale();
-	ImGui::SliderFloat2("Fire Scale", fireScale, 1, 10);
-	fire->Scale(fireScale);
+	Matrix t, s;
+	D3DXMatrixScaling(&s, 200, 40, 1);
+	D3DXMatrixTranslation(&t, 300, 300, 0);
+	trigger = s* t;
+	triggerCollider->Update(trigger);
+
+	bool bAabb3 = Collider::Aabb(marco->GetWorld(), trigger);
+	ImGui::LabelText("Matrix vs Trigger", "%s", bAabb3 ? "On" : "Off");
+	bAabb3 ? triggerCollider->SetHit() : triggerCollider->SetMiss();
+	bAabb3 ? fire->Stop() : fire->Play();
 
 	marco->Update();
 	marker->Update();
@@ -49,4 +60,5 @@ void S03_AabbDemo::Render()
 	marco->Render();
 	marker->Render();
 	fire->Render();
+	triggerCollider->Render();
 }
