@@ -57,9 +57,13 @@ void S03_AabbDemo::Update()
 	marker->Update();
 	fire->Update();
 
-	Vector2 s, t;
-	Vector3 r;
-	//gizmo->Set(marco->GetSprite(), &s, &r, &t);
+	Vector2 scale, translate;
+	Vector3 rotation;
+	gizmo->Set(marco->GetSprite(), &scale, &rotation, &translate);
+	ImGui::LabelText("Test", "%.2f,  %.2f", translate.x, translate.y);
+	marco->Position(translate);
+	marco->Scale(scale);
+	marco->Rotation(rotation);
 }
 
 void S03_AabbDemo::Render()

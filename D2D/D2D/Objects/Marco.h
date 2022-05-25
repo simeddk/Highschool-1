@@ -18,6 +18,16 @@ public:
 
 	Sprite* GetSprite();
 
+	void Position(Vector2& vec);
+	Vector2 Position();
+
+	void Scale(Vector2& vec);
+	Vector2 Scale();
+
+	void Rotation(Vector3& vec);
+	Vector3 Rotation();
+
+
 private:
 	Shader* shader = nullptr;
 	Animation* animation = nullptr;

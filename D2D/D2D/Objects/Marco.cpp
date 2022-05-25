@@ -107,3 +107,33 @@ Sprite* Marco::GetSprite()
 {
 	return animation->GetCurrentFrameAsSprite();
 }
+
+void Marco::Position(Vector2& vec)
+{
+	animation->Position(vec);
+}
+
+Vector2 Marco::Position()
+{
+	return animation->Position();
+}
+
+void Marco::Scale(Vector2& vec)
+{
+	animation->Scale(vec);
+}
+
+Vector2 Marco::Scale()
+{
+	return animation->Scale();
+}
+
+void Marco::Rotation(Vector3& vec)
+{
+	animation->Rotation(vec);
+}
+
+Vector3 Marco::Rotation()
+{
+	return animation->Rotation();
+}

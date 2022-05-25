@@ -31,4 +31,6 @@ void Gizmo::Set(Sprite* sprite, Vector2* outScale, Vector3* outRotation, Vector2
 	*outRotation = r;
 	*outPosition = Vector2(t.x, t.y);
 	*outScale = Vector2(s.x / sprite->TextureSize().x, s.y / sprite->TextureSize().y);
+
+	int a = 0;
 }

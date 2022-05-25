@@ -21,7 +21,7 @@ public:
 
 	void Pass(UINT pass) { this->pass = pass; }
 	Shader* GetShader() { return shader; }
-	Matrix World() { return world; }
+	Matrix& World() { return world; }
 	
 	Vector2 TextureSize() { return textureSize; }
 	Vector2 ScaledTextureSize();
