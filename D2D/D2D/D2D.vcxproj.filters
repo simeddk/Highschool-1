@@ -89,6 +89,12 @@
     <ClInclude Include="Objects\Fire.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\Gui.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Gizmo.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -173,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="Objects\Fire.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Gui.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\Gizmo.cpp">
+      <Filter>Renders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

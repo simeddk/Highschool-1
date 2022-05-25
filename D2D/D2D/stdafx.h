@@ -31,9 +31,11 @@ using namespace std;
 #pragma comment(lib, "d3dcompiler.lib")
 
 //ImGui
-#include <imgui.h>
-#include <imguiDx11.h>
-#pragma comment(lib, "ImGui.lib")
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_dx11.h"
+#include "ImGui/imgui_impl_win32.h"
+#include "ImGui/ImGuizmo.h"
+#pragma comment(lib, "ImGui/imgui.lib")
 
 //DirectWrite
 #include <d2d1_2.h>
@@ -64,6 +66,7 @@ typedef D3DXMATRIX Matrix;
 #include "Systems/Keyboard.h"
 #include "Systems/Time.h"
 #include "Systems/DirectWrite.h"
+#include "Systems/Gui.h"
 
 #include "Utilities/String.h"
 #include "Utilities/Path.h"

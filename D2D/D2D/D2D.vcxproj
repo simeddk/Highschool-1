@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>./;../../_Libraries/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../../_Libraries/</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -170,6 +170,7 @@
     <ClInclude Include="Renders\Animation.h" />
     <ClInclude Include="Renders\Clip.h" />
     <ClInclude Include="Renders\Context.h" />
+    <ClInclude Include="Renders\Gizmo.h" />
     <ClInclude Include="Renders\PerFrame.h" />
     <ClInclude Include="Renders\Shader.h" />
     <ClInclude Include="Renders\Sprite.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Systems\Device.h" />
     <ClInclude Include="Systems\DirectWrite.h" />
+    <ClInclude Include="Systems\Gui.h" />
     <ClInclude Include="Systems\Keyboard.h" />
     <ClInclude Include="Systems\Time.h" />
     <ClInclude Include="Utilities\Math.h" />
@@ -202,6 +204,7 @@
     <ClCompile Include="Renders\Animation.cpp" />
     <ClCompile Include="Renders\Clip.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
+    <ClCompile Include="Renders\Gizmo.cpp" />
     <ClCompile Include="Renders\PerFrame.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
     <ClCompile Include="Renders\Sprite.cpp" />
@@ -217,6 +220,7 @@
     </ClCompile>
     <ClCompile Include="Systems\Device.cpp" />
     <ClCompile Include="Systems\DirectWrite.cpp" />
+    <ClCompile Include="Systems\Gui.cpp" />
     <ClCompile Include="Systems\Keyboard.cpp" />
     <ClCompile Include="Systems\Time.cpp" />
     <ClCompile Include="Utilities\Math.cpp" />

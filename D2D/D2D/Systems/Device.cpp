@@ -165,8 +165,7 @@ WPARAM Running()
     MSG msg;
     ZeroMemory(&msg, sizeof(MSG));
 
-    ImGui::Create(Hwnd, Device, DeviceContext);
-    ImGui::StyleColorsDark();
+    Gui::Create();
 
     DirectWrite::Create();
 
@@ -192,7 +191,7 @@ WPARAM Running()
         else
         {
             Time::Get()->Update();
-            ImGui::Update();
+            Gui::Get()->Update();
 
             Context::Get()->Update();
             Update();
@@ -209,7 +208,7 @@ WPARAM Running()
             }
             DirectWrite::GetDC()->EndDraw();
 
-            ImGui::Render();
+            Gui::Get()->Render();
             SwapChain->Present(0, 0);
         }
     }
@@ -218,7 +217,7 @@ WPARAM Running()
 
     SafeDelete(Key);
     Context::Delete();
-    ImGui::Delete();
+    Gui::Delete();
     Time::Delete();
     DirectWrite::Delete();
 
@@ -227,7 +226,7 @@ WPARAM Running()
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    if (ImGui::WndProc(hwnd, msg, wParam, lParam))
+    if (Gui::Get()->MsgProc(hwnd, msg, wParam, lParam))
         return true;
 
     switch (msg)
@@ -236,8 +235,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             Width = LOWORD(lParam);
             Height = HIWORD(lParam);
-
-            ImGui::Invalidate();
 
             if (Device != nullptr)
             {
@@ -249,8 +246,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 DirectWrite::CreateBackBuffer();
                 CreateBackBuffer();
             }
-
-            ImGui::Validate();
            
         }
         break;

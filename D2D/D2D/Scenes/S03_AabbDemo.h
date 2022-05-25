@@ -22,4 +22,6 @@ private:
 
 	Matrix trigger;
 	Collider* triggerCollider = nullptr;
+
+	class Gizmo* gizmo = nullptr;
 };

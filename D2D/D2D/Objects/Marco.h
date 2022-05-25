@@ -16,6 +16,8 @@ public:
 	Collider* GetCollider() { return collider; }
 	Matrix GetWorld();
 
+	Sprite* GetSprite();
+
 private:
 	Shader* shader = nullptr;
 	Animation* animation = nullptr;

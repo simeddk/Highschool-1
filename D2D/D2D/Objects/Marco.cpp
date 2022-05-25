@@ -102,3 +102,8 @@ Matrix Marco::GetWorld()
 {
 	return animation->GetCurrentFrameAsSprite()->World();
 }
+
+Sprite* Marco::GetSprite()
+{
+	return animation->GetCurrentFrameAsSprite();
+}

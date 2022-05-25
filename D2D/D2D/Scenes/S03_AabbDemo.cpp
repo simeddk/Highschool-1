@@ -3,6 +3,7 @@
 #include "Objects/Marco.h"
 #include "Objects/Marker.h"
 #include "Objects/Fire.h"
+#include "Renders/Gizmo.h"
 
 S03_AabbDemo::S03_AabbDemo()
 {
@@ -15,6 +16,7 @@ S03_AabbDemo::S03_AabbDemo()
 	D3DXMatrixIdentity(&trigger);
 	triggerCollider = new Collider();
 
+	gizmo = new Gizmo();
 }
 
 S03_AabbDemo::~S03_AabbDemo()
@@ -24,6 +26,7 @@ S03_AabbDemo::~S03_AabbDemo()
 	SafeDelete(marker);
 	SafeDelete(fire);
 	SafeDelete(triggerCollider);
+	SafeDelete(gizmo);
 }
 
 void S03_AabbDemo::Update()
@@ -53,6 +56,10 @@ void S03_AabbDemo::Update()
 	marco->Update();
 	marker->Update();
 	fire->Update();
+
+	Vector2 s, t;
+	Vector3 r;
+	//gizmo->Set(marco->GetSprite(), &s, &r, &t);
 }
 
 void S03_AabbDemo::Render()
