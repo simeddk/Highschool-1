@@ -20,6 +20,7 @@ public:
 
 private:
 	Clip* clip;
+	class Gizmo* gizmo = nullptr;
 
 	Vector2 position;
 	Vector2 scale;

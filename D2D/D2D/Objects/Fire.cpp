@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Fire.h"
+#include "Renders/Gizmo.h"
 
 Fire::Fire(Shader* shader, Vector2 position, Vector2 scale)
 	: position(position)
@@ -26,21 +27,27 @@ Fire::Fire(Shader* shader, Vector2 position, Vector2 scale)
 	clip->Scale(this->scale);
 
 	collider = new Collider();
+	gizmo = new Gizmo();
 }
 
 Fire::~Fire()
 {
 	SafeDelete(clip);
 	SafeDelete(collider);
+	SafeDelete(gizmo);
 }
 
 void Fire::Update()
 {
-	clip->Position(position);
-	clip->Scale(scale);
-
 	clip->Update();
 	collider->Update(GetWorld());
+
+	Vector2 scale, translate;
+	Vector3 rotation;
+	gizmo->Set(clip->GetCurrentFrameAsSprite(), &scale, &rotation, &translate);
+	clip->Position(translate);
+	clip->Scale(scale);
+	clip->Rotation(rotation);
 }
 
 void Fire::Render()

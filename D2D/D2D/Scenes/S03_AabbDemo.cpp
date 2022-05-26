@@ -59,7 +59,7 @@ void S03_AabbDemo::Update()
 
 	Vector2 scale, translate;
 	Vector3 rotation;
-	gizmo->Set(marco->GetSprite(), &scale, &rotation, &translate);
+	gizmo->Set(marco->GetSprite(), &scale, &rotation, &translate, 1);
 	ImGui::LabelText("Test", "%.2f,  %.2f", translate.x, translate.y);
 	marco->Position(translate);
 	marco->Scale(scale);
