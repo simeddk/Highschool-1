@@ -5,12 +5,13 @@
 #include "Scenes/S01_Scene01Demo.h"
 #include "Scenes/S02_Scene02Demo.h"
 #include "Scenes/S03_AabbDemo.h"
+#include "Scenes/S04_ObbDemo.h"
 
 vector<Scene*> scenes;
 
-void InitScene() // ȣ�ηѷηѷѷѷηηηѷѷηηηηѷηηηηηѷѷѷηηѷѷηηηη�
+void InitScene()
 {
-	scenes.push_back(new S03_AabbDemo());
+	scenes.push_back(new S04_ObbDemo());
 }
 
 void DestroyScene()

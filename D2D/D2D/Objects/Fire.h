@@ -18,6 +18,11 @@ public:
 	void Play();
 	void Stop();
 
+	void EnableGizmo() { bGizmo = true; }
+	void DisableGizmo() { bGizmo = false; }
+
+	Sprite* GetSprite();
+
 private:
 	Clip* clip;
 	class Gizmo* gizmo = nullptr;
@@ -26,4 +31,5 @@ private:
 	Vector2 scale;
 
 	Collider* collider = nullptr;
+	bool bGizmo = false;
 };

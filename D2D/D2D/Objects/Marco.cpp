@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Marco.h"
+#include "Renders/Gizmo.h"
 
 Marco::Marco(Shader* shader, Vector2 position, Vector2 scale)
 	: shader(shader)
@@ -8,6 +9,7 @@ Marco::Marco(Shader* shader, Vector2 position, Vector2 scale)
 
 	perFrame = new PerFrame(shader);
 	collider = new Collider();
+	gizmo = new Gizmo();
 
 	Clip* clip = nullptr;
 
@@ -48,6 +50,7 @@ Marco::~Marco()
 	SafeDelete(animation);
 	SafeDelete(perFrame);
 	SafeDelete(collider);
+	SafeDelete(gizmo);
 }
 
 void Marco::Update()
@@ -84,6 +87,14 @@ void Marco::Update()
 	perFrame->Update();
 	collider->Update(GetWorld());
 	animation->Update();
+
+	CheckFalse(bGizmo);
+	Vector2 scale, translate;
+	Vector3 rotation;
+	gizmo->Set(animation->GetCurrentFrameAsSprite(), &scale, &rotation, &translate, 1);
+	animation->Position(translate);
+	animation->Scale(scale);
+	animation->Rotation(rotation);
 }
 
 void Marco::Render()

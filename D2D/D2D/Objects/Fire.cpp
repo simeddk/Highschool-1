@@ -28,6 +28,8 @@ Fire::Fire(Shader* shader, Vector2 position, Vector2 scale)
 
 	collider = new Collider();
 	gizmo = new Gizmo();
+
+
 }
 
 Fire::~Fire()
@@ -42,6 +44,7 @@ void Fire::Update()
 	clip->Update();
 	collider->Update(GetWorld());
 
+	CheckFalse(bGizmo);
 	Vector2 scale, translate;
 	Vector3 rotation;
 	gizmo->Set(clip->GetCurrentFrameAsSprite(), &scale, &rotation, &translate);
@@ -69,4 +72,9 @@ void Fire::Play()
 void Fire::Stop()
 {
 	clip->Stop();
+}
+
+Sprite* Fire::GetSprite()
+{
+	return clip->GetCurrentFrameAsSprite();
 }

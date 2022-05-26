@@ -74,17 +74,8 @@
     <ClInclude Include="Scenes\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\S01_Scene01Demo.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\S02_Scene02Demo.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\Marker.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenes\S03_AabbDemo.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Fire.h">
       <Filter>Objects</Filter>
@@ -94,6 +85,18 @@
     </ClInclude>
     <ClInclude Include="Renders\Gizmo.h">
       <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S01_Scene01Demo.h">
+      <Filter>Scenes\01_MultiScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S02_Scene02Demo.h">
+      <Filter>Scenes\01_MultiScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S03_AabbDemo.h">
+      <Filter>Scenes\02_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S04_ObbDemo.h">
+      <Filter>Scenes\02_Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,17 +168,8 @@
     <ClCompile Include="Collider\Collider.cpp">
       <Filter>Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\S01_Scene01Demo.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\S02_Scene02Demo.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Marker.cpp">
       <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\S03_AabbDemo.cpp">
-      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Fire.cpp">
       <Filter>Objects</Filter>
@@ -185,6 +179,18 @@
     </ClCompile>
     <ClCompile Include="Renders\Gizmo.cpp">
       <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S01_Scene01Demo.cpp">
+      <Filter>Scenes\01_MultiScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S02_Scene02Demo.cpp">
+      <Filter>Scenes\01_MultiScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S03_AabbDemo.cpp">
+      <Filter>Scenes\02_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S04_ObbDemo.cpp">
+      <Filter>Scenes\02_Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,12 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{070acfba-4d98-4ef9-a94e-360038e35f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\01_MultiScene">
+      <UniqueIdentifier>{a2e47c90-4b73-4671-a6c0-65297ef7f130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\02_Collision">
+      <UniqueIdentifier>{b97454c2-d927-4ea6-9f54-1e2c7aca7d0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

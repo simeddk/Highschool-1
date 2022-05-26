@@ -27,6 +27,8 @@ public:
 	void Rotation(Vector3& vec);
 	Vector3 Rotation();
 
+	void EnableGizmo() { bGizmo = true; }
+	void DisableGizmo() { bGizmo = false; }
 
 private:
 	Shader* shader = nullptr;
@@ -37,4 +39,7 @@ private:
 	Vector2 focusOffset = Vector2(180, 140);
 
 	Collider* collider = nullptr;
+
+	class Gizmo* gizmo = nullptr;
+	bool bGizmo = false;
 };
