@@ -98,6 +98,9 @@
     <ClInclude Include="Scenes\S04_ObbDemo.h">
       <Filter>Scenes\02_Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\S05_ProjectionDemo.h">
+      <Filter>Scenes\03_Projection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -192,6 +195,9 @@
     <ClCompile Include="Scenes\S04_ObbDemo.cpp">
       <Filter>Scenes\02_Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\S05_ProjectionDemo.cpp">
+      <Filter>Scenes\03_Projection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -220,6 +226,9 @@
     </Filter>
     <Filter Include="Scenes\02_Collision">
       <UniqueIdentifier>{b97454c2-d927-4ea6-9f54-1e2c7aca7d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\03_Projection">
+      <UniqueIdentifier>{46f86c94-abe2-4984-9953-8461fb727885}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

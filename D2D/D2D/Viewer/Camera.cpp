@@ -12,7 +12,7 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	Vector3 eye = Vector3(position.x, position.y, 0);
+	Vector3 eye = Vector3(position.x, position.y, depth);
 	Vector3 at = Vector3(0, 0, 1);
 	Vector3 up = Vector3(0, 1, 0);
 	D3DXMatrixLookAtLH(&view, &eye, &(eye + at), &up);

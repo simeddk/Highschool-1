@@ -34,10 +34,45 @@ Context* Context::Get()
 
 void Context::Update()
 {
+	//View
 	camera->Update();
 
 	//Projection
-	D3DXMatrixOrthoOffCenterLH(&projection, 0.f, (float)Width, 0, (float)Height, -1.f, +1.f);
+	static bool bOrtho = true;
+	ImGui::Checkbox("Use Ortho Projection", &bOrtho);
+
+	if (bOrtho)
+	{
+		static Vector2 horizontal = Vector2(0, (float)Width);
+		static Vector2 vertical = Vector2(0, (float)Height);
+
+		ImGui::SliderFloat2("Horizontal", horizontal, -800, 800);
+		ImGui::SliderFloat2("Vertical", vertical, -800, 800);
+
+		D3DXMatrixOrthoOffCenterLH
+		(
+			&projection, //out
+			horizontal.x, //left
+			horizontal.y, //right
+			vertical.x, //bottom
+			vertical.y, //top
+			-1.f, //zNear
+			+1.f //zFar
+		);
+	}
+	else
+	{
+		static float fov = 0.25f;
+		static float n = 0.0f;
+		static float f = 255.f;
+		ImGui::SliderFloat("FOV", &fov, 0.001f, 1.0f);
+		ImGui::SliderFloat("Depth", &camera->Depth(), -100, -1000);
+
+		float aspect = (float)Width / (float)Height;
+		D3DXMatrixPerspectiveFovLH(&projection, fov * D3DX_PI, aspect, n, f);
+	}
+
+
 }
 
 const Matrix& Context::GetView()
