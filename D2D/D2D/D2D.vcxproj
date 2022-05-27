@@ -181,6 +181,7 @@
     <ClInclude Include="Scenes\S05_ProjectionDemo.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Systems\CMouse.h" />
     <ClInclude Include="Systems\Device.h" />
     <ClInclude Include="Systems\DirectWrite.h" />
     <ClInclude Include="Systems\Gui.h" />
@@ -222,6 +223,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Systems\CMouse.cpp" />
     <ClCompile Include="Systems\Device.cpp" />
     <ClCompile Include="Systems\DirectWrite.cpp" />
     <ClCompile Include="Systems\Gui.cpp" />
