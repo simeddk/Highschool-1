@@ -24,6 +24,8 @@ public:
 
 	//이전 프레임과 현재 프레임의 커서 위치 차이x
 	Vector2 Position_Delta() { return Vector2(wheelMoveValue.x, wheelMoveValue.y); }
+
+	float Wheel() { return wheelStatus.z; }
 	float Wheel_Delta() { return wheelMoveValue.z; }
 
 	//입력 이벤트
@@ -34,7 +36,7 @@ public:
 	bool DoubleClick(EMouseButton button) { return buttonMap[(int)button] == EButtonState::DoubleClick; }
 
 private:
-	Vector2 position = Vector2(0, 0); //마우스 커서의 위치
+	Vector2 position = Vector2(0, 0); //마우스 커서의 위치(뷰표트 내에서만)
 
 	BYTE buttonStatus[MAX_MOUSE_INPUT]; //현재 버튼이 눌린 상태
 	BYTE buttonPrevStatus[MAX_MOUSE_INPUT]; //이전에 버튼이 눌린 상태

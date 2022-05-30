@@ -12,16 +12,12 @@ Freedom::~Freedom()
 
 void Freedom::Update()
 {
-	if (Key->Press(VK_RIGHT))
-		Move(Vector2(+1, 0) * speed);
-	else if (Key->Press(VK_LEFT))
-		Move(Vector2(-1, 0) * speed);
+	if (Mouse->Press(RButton))
+	{
+		Vector2 mouseDelta = Vector2(Mouse->Position_Delta().x * -1.0f, Mouse->Position_Delta().y);
+		Move(mouseDelta * speed);
 
-	if (Key->Press(VK_UP))
-		Move(Vector2(0, +1) * speed);
-	else if (Key->Press(VK_DOWN))
-		Move(Vector2(0, -1) * speed);
-
+	}
 	__super::Update();
 }
 

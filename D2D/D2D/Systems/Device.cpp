@@ -33,6 +33,7 @@ ID3D11DeviceContext* DeviceContext = nullptr;
 ID3D11RenderTargetView* RTV = nullptr;
 
 Keyboard* Key = nullptr;
+CMouse* Mouse = nullptr;
 
 void InitWindow(HINSTANCE hInstance, int nCmdShow)
 {
@@ -175,6 +176,7 @@ WPARAM Running()
     Context::Create();
 
     Key = new Keyboard();
+    Mouse = new CMouse();
 
     InitScene();
     /////////////////////////////
@@ -194,6 +196,8 @@ WPARAM Running()
             Gui::Get()->Update();
 
             Context::Get()->Update();
+            Mouse->Update();
+
             Update();
 
             D3DXCOLOR bgcolor = D3DXCOLOR(0.15f, 0.15f, 0.15f, 1.0f);
@@ -215,6 +219,7 @@ WPARAM Running()
     /////////////////////////////
     DestroyScene();
 
+    SafeDelete(Mouse);
     SafeDelete(Key);
     Context::Delete();
     Gui::Delete();
@@ -228,6 +233,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     if (Gui::Get()->MsgProc(hwnd, msg, wParam, lParam))
         return true;
+
+    if (Mouse != nullptr)
+        Mouse->WndProc(msg, wParam, lParam);
 
     switch (msg)
     {

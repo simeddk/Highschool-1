@@ -104,6 +104,9 @@
     <ClInclude Include="Systems\CMouse.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\S06_MouseDemo.h">
+      <Filter>Scenes\03_Projection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -203,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="Systems\CMouse.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S06_MouseDemo.cpp">
+      <Filter>Scenes\03_Projection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

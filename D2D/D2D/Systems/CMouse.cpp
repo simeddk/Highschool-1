@@ -50,6 +50,7 @@ void CMouse::Update()
 	//게임 화면 바깥까지 포함된 커서 위치 구하기
 	POINT point;
 	GetCursorPos(&point);
+	ScreenToClient(Hwnd, &point);
 	wheelOldStatus.x = wheelStatus.x;
 	wheelOldStatus.y = wheelStatus.y;
 	wheelStatus.x = (float)point.x;

@@ -7,12 +7,13 @@
 #include "Scenes/S03_AabbDemo.h"
 #include "Scenes/S04_ObbDemo.h"
 #include "Scenes/S05_ProjectionDemo.h"
+#include "Scenes/S06_MouseDemo.h"
 
 vector<Scene*> scenes;
 
 void InitScene()
 {
-	scenes.push_back(new S05_ProjectionDemo());
+	scenes.push_back(new S06_MouseDemo());
 }
 
 void DestroyScene()

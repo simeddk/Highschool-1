@@ -64,6 +64,7 @@ typedef D3DXMATRIX Matrix;
 
 //Framework
 #include "Systems/Keyboard.h"
+#include "Systems/CMouse.h"
 #include "Systems/Time.h"
 #include "Systems/DirectWrite.h"
 #include "Systems/Gui.h"
@@ -99,3 +100,4 @@ extern ID3D11DeviceContext* DeviceContext;
 extern ID3D11RenderTargetView* RTV;
 
 extern Keyboard* Key;
+extern CMouse* Mouse;
