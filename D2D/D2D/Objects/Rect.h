@@ -30,6 +30,8 @@ public:
 
 	void Pass(UINT val);
 
+	Matrix World() { return world; }
+
 
 private:
 	struct Vertex

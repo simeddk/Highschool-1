@@ -25,6 +25,9 @@ public:
 	//이전 프레임과 현재 프레임의 커서 위치 차이x
 	Vector2 Position_Delta() { return Vector2(wheelMoveValue.x, wheelMoveValue.y); }
 
+	//마우스의 월드상의 위치
+	Vector2 Position_World();
+
 	float Wheel() { return wheelStatus.z; }
 	float Wheel_Delta() { return wheelMoveValue.z; }
 

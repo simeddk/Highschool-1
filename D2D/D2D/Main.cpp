@@ -8,12 +8,13 @@
 #include "Scenes/S04_ObbDemo.h"
 #include "Scenes/S05_ProjectionDemo.h"
 #include "Scenes/S06_MouseDemo.h"
+#include "Scenes/S07_PickingDemo.h"
 
 vector<Scene*> scenes;
 
 void InitScene()
 {
-	scenes.push_back(new S06_MouseDemo());
+	scenes.push_back(new S07_PickingDemo());
 }
 
 void DestroyScene()

@@ -113,3 +113,18 @@ void CMouse::WndProc(UINT message, WPARAM wParam, LPARAM lParam)
 		wheelStatus.z += (float)tWheelValue;
 	}
 }
+
+Vector2 CMouse::Position_World()
+{
+	Vector2 mousePosition;
+	mousePosition.x = ((position.x / Width) * 2.0f) - 1.0f;
+	mousePosition.y = (((position.y / Height) * 2.0f) - 1.0f) * -1.0f;
+
+	Matrix vp = Context::Get()->GetCamera()->View() * Context::Get()->GetProjection();
+	D3DXMatrixInverse(&vp, nullptr, &vp);
+
+	D3DXVec2TransformCoord(&mousePosition, &mousePosition, &vp);
+
+	return mousePosition;
+
+}
