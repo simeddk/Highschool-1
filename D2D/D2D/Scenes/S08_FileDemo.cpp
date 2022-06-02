@@ -191,6 +191,9 @@ void S08_FileDemo::LoadMarkers()
 	{
 		markers.clear();
 
+		Performance p;
+		p.Start();
+
 		FILE* file = nullptr;
 		fopen_s(&file, "../../_Datas/Marekrs.txt", "r");
 
@@ -207,6 +210,9 @@ void S08_FileDemo::LoadMarkers()
 		}
 
 		fclose(file);
+
+		float elapsed = p.End();
+		MessageBox(Hwnd, to_wstring(elapsed).c_str(), L"Elapsed TXT", MB_OK);
 
 	}
 }

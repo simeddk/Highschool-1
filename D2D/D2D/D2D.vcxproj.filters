@@ -116,6 +116,9 @@
     <ClInclude Include="Utilities\Xml.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\BinaryFile.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -226,6 +229,9 @@
       <Filter>Scenes\04_File</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Xml.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\BinaryFile.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
