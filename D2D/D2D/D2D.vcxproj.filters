@@ -113,6 +113,9 @@
     <ClInclude Include="Scenes\S08_FileDemo.h">
       <Filter>Scenes\04_File</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\Xml.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -221,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="Scenes\S08_FileDemo.cpp">
       <Filter>Scenes\04_File</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Xml.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,8 @@ public:
 	Vector2 EndUV() { return endUV; }
 	ID3D11ShaderResourceView* SRV() { return srv; }
 
+	wstring GetTextureFile() { return textureFile; }
+
 public:
 	void Position(float x, float y);
 	void Position(Vector2& vec);

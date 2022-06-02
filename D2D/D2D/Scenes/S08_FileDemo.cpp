@@ -3,6 +3,7 @@
 #include "Objects/Marker.h"
 #include "Objects/Rect.h"
 #include "Objects/Marco.h"
+#include "Utilities/Xml.h"
 
 S08_FileDemo::S08_FileDemo()
 {
@@ -207,6 +208,34 @@ void S08_FileDemo::LoadMarkers()
 
 void S08_FileDemo::SaveXML()
 {
+	Xml::XMLDocument* document = new Xml::XMLDocument();
+	Xml::XMLDeclaration* decl = document->NewDeclaration();
+	document->LinkEndChild(decl);
+
+	Xml::XMLElement* root = document->NewElement("Background");
+	root->SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+	root->SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+	document->LinkEndChild(root);
+
+	Xml::XMLElement* node = document->NewElement("Sprite");
+	root->LinkEndChild(node);
+
+	Xml::XMLElement* element = nullptr;
+
+	element = document->NewElement("Name");
+	element->SetText(String::ToString(background->GetTextureFile()).c_str());
+	node->LinkEndChild(element);
+
+	element = document->NewElement("Width");
+	element->SetText(background->ScaledTextureSize().x);
+	node->LinkEndChild(element);
+
+	element = document->NewElement("Height");
+	element->SetText(background->ScaledTextureSize().y);
+	node->LinkEndChild(element);
+
+	document->SaveFile("../../_Datas/Background.xml");
+
 }
 
 void S08_FileDemo::LoadXML()
