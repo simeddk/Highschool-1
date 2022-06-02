@@ -35,6 +35,9 @@ void Sprite::Initialize(Shader* shader, wstring textureFile, float cropStartX, f
 	cropEndX = (cropEndX > 0) ? cropEndX / (float)info.Width : 1.0f;
 	cropEndY = (cropEndY > 0) ? cropEndY / (float)info.Height : 1.0f;
 
+	startUV = Vector2(cropStartX, cropStartY);
+	endUV = Vector2(cropEndX, cropEndY);
+
 	//Vertex Data
 	Vertex vertices[4];
 	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f);

@@ -110,6 +110,9 @@
     <ClInclude Include="Scenes\S07_PickingDemo.h">
       <Filter>Scenes\03_Projection</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\S08_FileDemo.h">
+      <Filter>Scenes\04_File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -216,6 +219,9 @@
     <ClCompile Include="Scenes\S07_PickingDemo.cpp">
       <Filter>Scenes\03_Projection</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\S08_FileDemo.cpp">
+      <Filter>Scenes\04_File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -247,6 +253,9 @@
     </Filter>
     <Filter Include="Scenes\03_Projection">
       <UniqueIdentifier>{46f86c94-abe2-4984-9953-8461fb727885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\04_File">
+      <UniqueIdentifier>{78f63478-9600-4e44-95ab-301d122da08d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -26,6 +26,10 @@ public:
 	Vector2 TextureSize() { return textureSize; }
 	Vector2 ScaledTextureSize();
 
+	Vector2 StartUV() { return startUV; }
+	Vector2 EndUV() { return endUV; }
+	ID3D11ShaderResourceView* SRV() { return srv; }
+
 public:
 	void Position(float x, float y);
 	void Position(Vector2& vec);
@@ -73,6 +77,9 @@ private:
 
 	Matrix world;
 	ID3DX11EffectMatrixVariable* sWorld;
+
+	Vector2 startUV;
+	Vector2 endUV;
 };
 
 //--------------------------------------------------------------------------

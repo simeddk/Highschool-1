@@ -7,7 +7,7 @@ public:
 	Rect(Shader* shader, Vector2 position, Vector2 scale, D3DXCOLOR color = D3DXCOLOR(1, 1, 1, 1));
 	virtual ~Rect();
 
-	virtual void Update(Matrix& V, Matrix& P);
+	virtual void Update();
 	void Render();
 
 private:
@@ -51,14 +51,11 @@ private:
 	D3DXCOLOR color;
 
 	Matrix world;
-	Matrix view;
-	Matrix projection;
 
 	ID3DX11EffectMatrixVariable* sWorld;
-	ID3DX11EffectMatrixVariable* sView;
-	ID3DX11EffectMatrixVariable* sProjection;
-
 	ID3DX11EffectVectorVariable* sColor;
+
+	PerFrame* perFrame = nullptr;
 
 	UINT pass;
 };

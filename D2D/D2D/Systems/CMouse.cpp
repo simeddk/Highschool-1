@@ -21,6 +21,8 @@ CMouse::~CMouse()
 
 void CMouse::Update()
 {
+	CheckTrue(ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered());
+
 	//이전 프레임에서 계산했던 buttonStatus를 buttonPrevStatus로 복사
 	memcpy(buttonPrevStatus, buttonStatus, sizeof(BYTE) * MAX_MOUSE_INPUT);
 

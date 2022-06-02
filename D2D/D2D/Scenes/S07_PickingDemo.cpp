@@ -47,9 +47,8 @@ void S07_PickingDemo::Update()
 	for (Marker* marker : markers)
 		marker->Update();
 
-	Matrix V = Context::Get()->GetView();
-	Matrix P = Context::Get()->GetProjection();
-	rect->Update(V, P);
+	
+	rect->Update();
 
 	bool bPicked = true;
 	bPicked &= Collider::Aabb(rect->World(), wPosition);
