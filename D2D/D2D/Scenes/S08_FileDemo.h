@@ -37,4 +37,5 @@ private:
 	Color rectColor;
 
 	class Marco* marco = nullptr;
+	Sprite* scopeDog = nullptr;
 };

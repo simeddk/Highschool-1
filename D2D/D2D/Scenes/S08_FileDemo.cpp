@@ -18,6 +18,7 @@ S08_FileDemo::S08_FileDemo()
 	rectColor = rect->Color();
 
 	marco = new Marco(shader, Vector2(0, 0), Vector2(1, 1));
+	scopeDog = new Sprite(shader, L"Scopedog.png");
 }
 
 S08_FileDemo::~S08_FileDemo()
@@ -33,6 +34,7 @@ S08_FileDemo::~S08_FileDemo()
 		SafeDelete(marker);
 
 	SafeDelete(marco);
+	SafeDelete(scopeDog);
 }
 
 void S08_FileDemo::Update()
@@ -90,6 +92,7 @@ void S08_FileDemo::Update()
 			ImVec4(1, 0, 0, 1)
 		))
 		{
+			int a = 0;
 			SaveXML();
 		}
 
@@ -97,15 +100,16 @@ void S08_FileDemo::Update()
 		ImGui::SameLine();
 		if (ImGui::ImageButton
 		(
-			marco->GetSprite()->SRV(),
+			scopeDog->SRV(),
 			ImVec2(marco->GetSprite()->TextureSize().x, marco->GetSprite()->TextureSize().y),
-			ImVec2(marco->GetSprite()->StartUV().x, marco->GetSprite()->StartUV().y),
-			ImVec2(marco->GetSprite()->EndUV().x, marco->GetSprite()->EndUV().y),
+			ImVec2(scopeDog->StartUV().x, scopeDog->StartUV().y),
+			ImVec2(scopeDog->EndUV().x, scopeDog->EndUV().y),
 			5,
 			ImVec4(0, 0, 0, 1),
 			ImVec4(0, 1, 0, 1)
 		))
 		{
+			int a = 0;
 			LoadXML();
 		}
 	}
@@ -114,6 +118,7 @@ void S08_FileDemo::Update()
 	perFrame->Update();
 	background->Update();
 	marco->Update();
+	scopeDog->Update();
 	rect->Update();
 
 	for (Marker* marker : markers)
@@ -223,7 +228,9 @@ void S08_FileDemo::SaveXML()
 	Xml::XMLElement* element = nullptr;
 
 	element = document->NewElement("Name");
-	element->SetText(String::ToString(background->GetTextureFile()).c_str());
+	wstring aliasPath = background->GetTextureFile();
+	String::Replace(&aliasPath, L"../../_Textures/Background/", L"");
+	element->SetText(String::ToString(aliasPath).c_str());
 	node->LinkEndChild(element);
 
 	element = document->NewElement("Width");
@@ -236,8 +243,37 @@ void S08_FileDemo::SaveXML()
 
 	document->SaveFile("../../_Datas/Background.xml");
 
+	SafeDelete(document);
 }
 
 void S08_FileDemo::LoadXML()
 {
+	Xml::XMLDocument* document = new Xml::XMLDocument();
+	Xml::XMLError error = document->LoadFile("../../_Datas/Background.xml");
+	assert(error == Xml::XML_SUCCESS);
+
+	Xml::XMLElement* root = document->FirstChildElement();
+	Xml::XMLElement* sprite = root->FirstChildElement();
+
+	Xml::XMLElement* element =  sprite->FirstChildElement();
+	string name = element->GetText();
+
+	element = element->NextSiblingElement();
+	int width = element->IntText();
+
+	element = element->NextSiblingElement();
+	int height = element->IntText();
+
+	SafeDelete(document);
+
+	wstring msg = L"FileName : ";
+	msg += String::ToWString(name);
+	msg += L"\n";
+
+	msg += L"Size : ";
+	msg += to_wstring(width);
+	msg += L" x ";
+	msg += to_wstring(height);
+
+	MessageBox(Hwnd, msg.c_str(), L"Background Information", MB_OK);
 }
