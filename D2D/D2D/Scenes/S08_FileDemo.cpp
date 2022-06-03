@@ -63,8 +63,9 @@ void S08_FileDemo::Update()
 
 	ImGui::Separator();
 	ImGui::Spacing();
-	if (ImGui::CollapsingHeader("Markers"), ImGuiTreeNodeFlags_DefaultOpen)
+	if (ImGui::CollapsingHeader("Markers", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		//TXT
 		if (ImGui::Button("Save Markers"))
 			SaveMarkers();
 		
@@ -72,13 +73,22 @@ void S08_FileDemo::Update()
 		if (ImGui::Button("Load Markers"))
 			LoadMarkers();
 
+		//BIN
+		if (ImGui::Button("Save Bin"))
+			SaveBinary();
+
+		ImGui::SameLine();
+		if (ImGui::Button("Load Bin"))
+			LoadBinary();
+
+		//Clear
 		if (ImGui::Button("Clear Markers"))
 			markers.clear();
 	}
 
 	ImGui::Separator();
 	ImGui::Spacing();
-	if (ImGui::CollapsingHeader("XML"), ImGuiTreeNodeFlags_DefaultOpen)
+	if (ImGui::CollapsingHeader("XML", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		//Save Xml
 		if (ImGui::ImageButton
@@ -282,4 +292,48 @@ void S08_FileDemo::LoadXML()
 	msg += to_wstring(height);
 
 	MessageBox(Hwnd, msg.c_str(), L"Background Information", MB_OK);
+}
+
+void S08_FileDemo::SaveBinary()
+{
+	BinaryWriter* w = new BinaryWriter(L"../../_Datas/Markers.bin");
+
+	w->UInt(markers.size());
+
+	for (size_t i = 0; i < markers.size(); i++)
+	{
+		w->UInt(i);
+		w->Vector2(markers[i]->Position());
+	}
+
+	SafeDelete(w);
+
+}
+
+void S08_FileDemo::LoadBinary()
+{
+	if (Path::ExistFile(L"../../_Datas/Markers.bin") == false) return;
+	
+	Performance p;
+	p.Start();
+
+	markers.clear();
+
+	BinaryReader* r = new BinaryReader(L"../../_Datas/Markers.bin");
+
+	UINT count;
+	count = r->UInt();
+
+	for (size_t i = 0; i < count; i++)
+	{
+		UINT index = r->UInt();
+		Vector2 position = r->Vector2();
+
+		markers.push_back(new Marker(shader, position));
+	}
+
+	float elapsed = p.End();
+	MessageBox(Hwnd, to_wstring(elapsed).c_str(), L"Eplased Bin", MB_OK);
+
+	SafeDelete(r);
 }

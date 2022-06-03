@@ -23,6 +23,9 @@ private:
 	void SaveXML();
 	void LoadXML();
 
+	void SaveBinary();
+	void LoadBinary();
+
 private:
 	Shader* shader = nullptr;
 	Sprite* background = nullptr;
