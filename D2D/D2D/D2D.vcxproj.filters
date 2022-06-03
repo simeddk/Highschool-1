@@ -119,6 +119,18 @@
     <ClInclude Include="Utilities\BinaryFile.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\S09_FunctionPtrDemo.h">
+      <Filter>Scenes\04_File</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Test1.h">
+      <Filter>Scenes\04_File</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Test2.h">
+      <Filter>Scenes\04_File</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S10_FileDialogDemo.h">
+      <Filter>Scenes\04_File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -233,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="Utilities\BinaryFile.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S09_FunctionPtrDemo.cpp">
+      <Filter>Scenes\04_File</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S10_FileDialogDemo.cpp">
+      <Filter>Scenes\04_File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

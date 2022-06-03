@@ -24,6 +24,7 @@ float Math::ToDegree(float radian)
 
 float Math::Random(float r1, float r2)
 {
+	srand((UINT)GetTickCount64());
 	float random = ((float)rand()) / (float)RAND_MAX;
 	float diff = r2 - r1;
 	float val = random * diff;

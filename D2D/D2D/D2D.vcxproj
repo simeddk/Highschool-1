@@ -182,7 +182,11 @@
     <ClInclude Include="Scenes\S06_MouseDemo.h" />
     <ClInclude Include="Scenes\S07_PickingDemo.h" />
     <ClInclude Include="Scenes\S08_FileDemo.h" />
+    <ClInclude Include="Scenes\S09_FunctionPtrDemo.h" />
+    <ClInclude Include="Scenes\S10_FileDialogDemo.h" />
     <ClInclude Include="Scenes\Scene.h" />
+    <ClInclude Include="Scenes\Test1.h" />
+    <ClInclude Include="Scenes\Test2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Systems\CMouse.h" />
     <ClInclude Include="Systems\Device.h" />
@@ -225,6 +229,8 @@
     <ClCompile Include="Scenes\S06_MouseDemo.cpp" />
     <ClCompile Include="Scenes\S07_PickingDemo.cpp" />
     <ClCompile Include="Scenes\S08_FileDemo.cpp" />
+    <ClCompile Include="Scenes\S09_FunctionPtrDemo.cpp" />
+    <ClCompile Include="Scenes\S10_FileDialogDemo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

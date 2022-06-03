@@ -10,12 +10,14 @@
 #include "Scenes/S06_MouseDemo.h"
 #include "Scenes/S07_PickingDemo.h"
 #include "Scenes/S08_FileDemo.h"
+#include "Scenes/S09_FunctionPtrDemo.h"
+#include "Scenes/S10_FileDialogDemo.h"
 
 vector<Scene*> scenes;
 
 void InitScene()
 {
-	scenes.push_back(new S08_FileDemo());
+	scenes.push_back(new S10_FileDialogDemo());
 }
 
 void DestroyScene()
