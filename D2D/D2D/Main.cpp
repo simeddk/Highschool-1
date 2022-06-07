@@ -12,12 +12,13 @@
 #include "Scenes/S08_FileDemo.h"
 #include "Scenes/S09_FunctionPtrDemo.h"
 #include "Scenes/S10_FileDialogDemo.h"
+#include "Scenes/S11_SoundDemo.h"
 
 vector<Scene*> scenes;
 
 void InitScene()
 {
-	scenes.push_back(new S10_FileDialogDemo());
+	scenes.push_back(new S11_SoundDemo());
 }
 
 void DestroyScene()

@@ -131,6 +131,12 @@
     <ClInclude Include="Scenes\S10_FileDialogDemo.h">
       <Filter>Scenes\04_File</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\CSound.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\S11_SoundDemo.h">
+      <Filter>Scenes\05_Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -252,6 +258,12 @@
     <ClCompile Include="Scenes\S10_FileDialogDemo.cpp">
       <Filter>Scenes\04_File</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\CSound.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\S11_SoundDemo.cpp">
+      <Filter>Scenes\05_Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -286,6 +298,9 @@
     </Filter>
     <Filter Include="Scenes\04_File">
       <UniqueIdentifier>{78f63478-9600-4e44-95ab-301d122da08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\05_Sound">
+      <UniqueIdentifier>{17511083-f988-4a52-adda-ca1a5954f4fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

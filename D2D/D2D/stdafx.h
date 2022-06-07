@@ -43,6 +43,8 @@ using namespace std;
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 
+#include <FMod/fmod.hpp>
+#pragma comment(lib, "FMod/fmodexL_vc.lib")
 
 //Macro
 #define SafeRelease(p) { if(p) { (p)->Release(); (p) = nullptr; } }
@@ -68,6 +70,7 @@ typedef D3DXMATRIX Matrix;
 #include "Systems/Time.h"
 #include "Systems/DirectWrite.h"
 #include "Systems/Gui.h"
+#include "Systems/CSound.h"
 
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
@@ -102,3 +105,4 @@ extern ID3D11RenderTargetView* RTV;
 
 extern Keyboard* Key;
 extern CMouse* Mouse;
+extern CSound* Sound;

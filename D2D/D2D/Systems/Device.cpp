@@ -34,6 +34,7 @@ ID3D11RenderTargetView* RTV = nullptr;
 
 Keyboard* Key = nullptr;
 CMouse* Mouse = nullptr;
+CSound* Sound = nullptr;
 
 void InitWindow(HINSTANCE hInstance, int nCmdShow)
 {
@@ -177,6 +178,7 @@ WPARAM Running()
 
     Key = new Keyboard();
     Mouse = new CMouse();
+    Sound = new CSound();
 
     InitScene();
     /////////////////////////////
@@ -197,6 +199,7 @@ WPARAM Running()
 
             Context::Get()->Update();
             Mouse->Update();
+            Sound->Update();
 
             Update();
 
@@ -219,6 +222,7 @@ WPARAM Running()
     /////////////////////////////
     DestroyScene();
 
+    SafeDelete(Sound);
     SafeDelete(Mouse);
     SafeDelete(Key);
     Context::Delete();

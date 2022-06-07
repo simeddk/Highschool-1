@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{edd12e53-e6c2-4d30-9034-5ec353f6eefb}</ProjectGuid>
     <RootNamespace>D2D</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,11 +184,13 @@
     <ClInclude Include="Scenes\S08_FileDemo.h" />
     <ClInclude Include="Scenes\S09_FunctionPtrDemo.h" />
     <ClInclude Include="Scenes\S10_FileDialogDemo.h" />
+    <ClInclude Include="Scenes\S11_SoundDemo.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Test1.h" />
     <ClInclude Include="Scenes\Test2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Systems\CMouse.h" />
+    <ClInclude Include="Systems\CSound.h" />
     <ClInclude Include="Systems\Device.h" />
     <ClInclude Include="Systems\DirectWrite.h" />
     <ClInclude Include="Systems\Gui.h" />
@@ -231,6 +233,7 @@
     <ClCompile Include="Scenes\S08_FileDemo.cpp" />
     <ClCompile Include="Scenes\S09_FunctionPtrDemo.cpp" />
     <ClCompile Include="Scenes\S10_FileDialogDemo.cpp" />
+    <ClCompile Include="Scenes\S11_SoundDemo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -238,6 +241,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Systems\CMouse.cpp" />
+    <ClCompile Include="Systems\CSound.cpp" />
     <ClCompile Include="Systems\Device.cpp" />
     <ClCompile Include="Systems\DirectWrite.cpp" />
     <ClCompile Include="Systems\Gui.cpp" />
