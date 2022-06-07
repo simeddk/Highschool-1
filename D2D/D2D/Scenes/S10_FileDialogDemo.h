@@ -17,6 +17,9 @@ private:
 	void SaveBinary();
 	void LoadBinary();
 
+	void OnLoadCompleted(wstring file);
+	void OnSaveCompleted(wstring file);
+
 private:
 	Shader* shader = nullptr;
 	Sprite* background = nullptr;
